@@ -87,6 +87,14 @@ DATABASES = {
         'PASSWORD': 'c1d2e3n4A!',
         'HOST': '',
         'PORT': '',
+    },
+    'production': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'project_31jh',
+        'USER': 'root',
+        'PASSWORD': 'bsVMpxV4gjmzor86gEt2EmX29XEfnhyD',
+        'HOST': 'dpg-chqhut2k728ivvtsm210-a.ohio-postgres.render.com',
+        'PORT': '5432',
     }
 }
 
@@ -126,6 +134,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATIC_ROOT = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
