@@ -1,0 +1,27 @@
+<div class="player">
+    <div class="cover" >
+        <img style="width:32px; height:46px;" src="{{ coverSrc }}">
+    </div>
+    <div class="info">
+        <span #title class="title"></span>
+        <span #autor class="autor"></span>
+    </div>
+    <div class="progress">
+        <span class="time">{{ currentTime }}</span>
+        <div #progressArea (click)="changeTime($event)" class="progress-area">
+            <div #progressBar  class="progress-bar"></div>
+        </div>
+        <span class="time">{{ duration }}</span>
+    </div>
+    <div class="controls">      
+        <i (click)="previousBook()" class="fas fa-forward fa-flip-horizontal fa-2x"></i>
+        <i (click)="reverseSeconds()"class="fas fa-step-forward fa-flip-horizontal fa-2x"></i>
+        <i id="paused" (click)="playPause()" [ngClass]="isMusicPlaying ? 'fas fa-play fa-2x' : 'fas fa-pause fa-2x'"></i>
+        <i (click)="skipSeconds()" class="fas fa-step-forward fa-2x"></i>
+        <i (click)="nextBook()" class="fas fa-forward fa-2x"></i>
+    </div>
+</div>
+
+<audio (timeupdate)="updateCurrentTime()" (loadeddata)="dataLoaded()" #audio>
+    <source src="{{ musicSrc }}"  >
+</audio>

@@ -1,0 +1,126 @@
+.container {
+    width: 90vw;
+    max-width: 34em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #ffffff;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    padding: 3em 2em;
+    border-radius: 0.6em;
+    box-shadow: 0 1em 2em rgba(28, 0, 80, 0.1);
+
+    .title{
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5em;
+        padding-left: 10%;
+
+
+        span {
+            width: 90%;
+            font-size: 2.2em;
+            text-align: center;
+        }
+
+        i{
+            width: 10%;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+    }
+
+
+
+    .wrapper {
+        display: grid;
+        grid-template-columns: 11fr 1fr;
+        gap: 1em;
+        margin-bottom: 1em;
+
+        .error-con {
+            align-self: center;
+
+            .error {
+                color: #ff5353;
+                font-weight: 400;
+            }
+        }
+
+        i{
+            color: #FCB62B;
+            cursor: pointer;
+        }
+    }
+
+    button {
+        font-size: 1em;
+        background-color: var(--primary-color);
+        color: var(--secondary-color);
+        padding: 0.6em 0;
+        border-radius: 0.3em;
+        font-weight: 600;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+
+    .label {
+        font-weight: 600;
+        margin-bottom: 0.3em;
+        display: flex;
+
+        span {
+            width: 45%
+        }
+
+        i {
+            cursor: pointer;
+        }
+
+        .left {
+            color: var(--primary-color);
+            width: 40%;
+            display: flex;
+            column-gap: 0.5vw;
+            align-items: center;
+        }
+        
+        .right {
+            width: 15%;
+            display: flex;
+            column-gap: 0.5vw;
+            align-items: center;
+        }
+    }
+    
+    textarea {
+        width: 100%;
+        padding: 0.7em 0.5em;
+        border: 1px solid #d0d0d0;
+        outline: none;
+        font-family: 'Roboto';
+        font-size: 1rem;
+        border-radius: 0.3em;
+        resize: none;
+        margin-bottom: 3vh;
+    }
+    
+    textarea:focus {
+        border-color: #a7a7a7;
+    }
+    
+}
+  
+.custom-editor{
+    height: 22vh;
+    width: 100%;
+    margin-bottom: 1.2em;
+    border-radius: 0.3em; /* Set your desired border radius value */
+    border: 1px solid #ccc; /* Optional: Add a border for visual distinction */
+    outline: none; /* Add this property to remove any outline */
+    box-shadow: none; /* Add this property to remove any box shadow */
+}

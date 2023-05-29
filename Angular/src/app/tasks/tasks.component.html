@@ -1,0 +1,229 @@
+<!-- Title -->
+<div class="title">
+    <div class="title-items">
+        <h1>{{ title }}</h1>
+        <i [ngClass]="completedTasks < 3 ? 'fal fa-circle fa-2x' : 'fas fa-check-circle fa-2x high'"></i>
+        <h2>{{ completedTasks }}/3</h2>
+    </div>
+</div>
+
+<!-- All tasks -->
+   
+<div class="taskbox" id="taskbox" cdkDropList (cdkDropListDropped)="onDrop($event, 0, 1)" [cdkDropListData]="dataSource">
+    <div *ngFor="let data of dataSource" cdkDragBoundary="#taskbox" cdkDrag [ngClass]="data.status == 2 ? 'task-completed' : data.status == 3 ? 'task-renew' : ''">
+
+        <!-- Preview -->
+        <div class="preview" *cdkDragPreview>
+            <div class="preview-handle" cdkDragHandle>
+                <i class="fal fa-grip-lines fa-2x"></i>
+            </div>
+            <div class="preview-item fa-stack">
+                <i [ngClass]="data.status == 0 ? '' : 'hidden'" class="fas fa-circle fa-stack-2x lightred"></i>
+                <i [ngClass]="data.status == 0 ? '' : 'hidden'" class="fal fa-circle fa-stack-2x"></i>
+                <i [ngClass]="data.status == 0 ? '' : 'visible'" class="fal fa-check-circle fa-stack-2x"></i>
+            </div>
+            <div class="preview-name" contenteditable #taskName (keydown.enter)="taskName.blur()" (keydown.enter)="makeTaskEditable($event, data.id, 1)"> {{ data.task }} </div>
+        </div>
+        
+        <!-- Task -->
+        <div class="task" id="task{{ data.id }}" >
+
+            <!-- Handler -->
+            <div class="task-handle" cdkDragHandle>
+                <i class="fal fa-grip-lines fa-2x"></i>
+            </div>
+            
+            <!-- Complete item -->
+            <div class="task-item fa-stack">
+                <i [ngClass]="data.status == 1 ? 'hidden' : ''" class="fas fa-circle fa-stack-2x lightred"></i>
+                <i [ngClass]="data.status == 1 ? 'hidden' : ''" class="fal fa-circle fa-stack-2x"></i>
+                <i [ngClass]="data.status == 1 ? 'visible' : ''" class="fal fa-check-circle fa-stack-2x" 
+                    (click)="completeTask(data.id, data.id, data.status, 1, data.repeat) && updatePicker.select(convertDate(data.date))"></i>
+            </div>
+            <div class="task-name" [ngClass]="data.status == 1 ? 'completed' : ''" contenteditable #taskName (keydown.enter)="taskName.blur()" (keydown.enter)="makeTaskEditable($event, data.id, 1)"> {{ data.task }} </div>
+            
+            <!-- Counter -->
+            <div class="task-counter">
+                {{ subtaskCounterComplete(data.id) }}{{ subtaskCounter(data.id) }}         
+            </div>
+
+            <!-- Update project -->
+            <div [style.pointer-events]="isDisabled ? 'none' : 'auto'" (click)="projectSetter.open()" class="task-date red">{{ data.project }}
+                <mat-select style="width: 0px" #projectSetter>
+                    <div *ngFor="let project of projects">
+                        <mat-option (click)="updateProject($event, data.id)">{{ project.project }}</mat-option>
+                    </div>
+                </mat-select>
+            </div>
+
+            <!-- Update date -->
+            <div [style.pointer-events]="isDisabled ? 'none' : 'auto'" (click)="removeDate($event, data.id) && updatePicker.open()" (click)="updatePicker.select(convertDate(data.date))" class="task-date" 
+                [ngClass]="data.date == today ? 'green' : data.date == 'No date selected' ?  'red' : data.date < today ? 'overdue' : 'yellow'">
+                &nbsp;{{ isDateSelected(data.date) ? (data.date | date: 'MMMM d, y') : data.date }}
+                <mat-datepicker #updatePicker></mat-datepicker>
+                <input style="visibility: hidden; width: 0px;" matInput [matDatepicker]="updatePicker" (dateChange)="updateDate($event.value, data.id)">
+            </div>
+
+            <!-- Right buttons -->
+            <div class="task-buttons">
+                <i id="{{ data.id }}" class="fal fa-trash-alt fa-lg click" (click)="deleteTask($event, 1)"></i>
+                <!-- Repeat -->
+                <div class="task-repeat" (click)="updateRepeat(data.id, data.repeat)" [ngClass]="data.repeat == 1 ? 'high' : 'low'">
+                    <i class="fas fa-repeat fa-lg click"></i>
+                </div>
+                <div [style.pointer-events]="isDisabled ? 'none' : 'auto'" (click)="openPrioritySetter(data.id.toString())">
+                    <i class="fas fa-flag fa-lg click" [ngClass]="data.priority == 1 ? 'high' : data.priority == 2 ? 'medium' : 'low'">
+                    </i>
+                    <mat-select style="width:0px;" #prioritySetter id="{{ data.id }}">
+                        <mat-option (click)="updateTaskPriority($event, data.id)"><i class="fas fa-flag high" style="margin-right:8px"></i>Alta</mat-option>
+                        <mat-option (click)="updateTaskPriority($event, data.id)"><i class="fas fa-flag medium" style="margin-right:8px"></i>Média</mat-option>
+                        <mat-option (click)="updateTaskPriority($event, data.id)"><i class="fas fa-flag low" style="margin-right:8px"></i>Baixa</mat-option>
+                    </mat-select>
+                </div>
+                <i class="fas fa-chevron-down fa-lg click" (click)="filterSubtasks($event, data.id)"></i>
+            </div>                    
+
+        </div>
+        
+        <!-- Subtask -->
+        <div class="subtasks" id="subtask{{ data.id }}" cdkDropList (cdkDropListDropped)="onDrop($event, data.id, 2)" [cdkDropListData]="filteredSubtasks" >
+            <div class="subtask" *ngFor="let dados of filteredSubtasks" cdkDragBoundary="#subtask{{ data.id }}" cdkDrag [ngClass]="dados.status == 2 ? 'task-completed' : ''">
+                <!-- Preview -->
+                <div class="preview" *cdkDragPreview>
+                    <div class="preview-handle">
+                        <i class="fal fa-grip-lines fa-2x"></i>
+                    </div>
+                    <div class="preview-item fa-stack">
+                        <i [ngClass]="dados.status == 1 ? 'hidden' : ''" class="fas fa-circle fa-stack-2x lightred" id="subtask-item{{ dados.id }}"></i>
+                        <i [ngClass]="dados.status == 1 ? 'hidden' : ''" class="fal fa-circle fa-stack-2x" id="subtask-item{{ dados.id }}"></i>
+                        <i [ngClass]="dados.status == 1 ? 'visible' : ''" class="fal fa-check-circle fa-stack-2x"></i>
+                    </div>
+                    <div class="preview-name" contenteditable #taskName (keydown.enter)="taskName.blur()" (keydown.enter)="makeTaskEditable($event, dados.id, 2)" 
+                        [ngClass]="dados.status == 1 ? 'completed' : ''">
+                        {{ dados.task }}
+                    </div>
+                </div>
+
+                <div class="task-handle" cdkDragHandle>
+                    <i class="fal fa-grip-lines fa-2x"></i>
+                </div>
+                <div class="subtask-item fa-stack">
+                    <i [ngClass]="dados.status == 1 ? 'hidden' : ''" class="fas fa-circle fa-stack-2x lightred" id="subtask-item{{ dados.id }}"></i>
+                    <i [ngClass]="dados.status == 1 ? 'hidden' : ''" class="fal fa-circle fa-stack-2x" id="subtask-item{{ dados.id }}"></i>
+                    <i [ngClass]="dados.status == 1 ? 'visible' : ''" class="fal fa-check-circle fa-stack-2x"  (click)="completeTask(data.id, dados.id, dados.status, 2, 0)"></i>
+                </div>
+                <div class="subtask-name" contenteditable #taskName (keydown.enter)="taskName.blur()" (keydown.enter)="makeTaskEditable($event, dados.id, 2)" 
+                    [ngClass]="dados.status == 1 ? 'completed' : ''">
+                    {{ dados.task }}
+                </div>
+                <div class="subtask-buttons">
+                    <i id="{{ dados.id }}" class="fal fa-trash-alt fa-lg click" (click)="deleteTask($event, 2)"></i>
+                </div>    
+            </div>
+            
+            <div class="add-subtask" [style.pointer-events]="isDisabled ? 'none' : 'auto'">
+                <div *ngIf="!subtaskInputStatus" class="add-subtask-closed" (click)="inputOpen(data.id)">
+                    <i class="far fa-plus fa-2x"></i>
+                    <span class="add-subtask-span">New task</span>
+                </div>
+                <div *ngIf="subtaskInputStatus" class="add-subtask-open">
+                    <i class="fal fa-plus-circle fa-2x click" (click)="addSubtask(data.id)"></i>
+                    <input class="add-subtask-input" (keyup.enter)="addSubtask(data.id)" *ngIf="subtaskInputStatus" type="text" id="subtaskInput{{ data.id }}">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add task -->
+<div class="add-task" [style.pointer-events]="isDisabled ? 'none' : 'auto'">
+
+    <!-- Closed -->
+    <div *ngIf="!inputStatus" (click)="inputTask()" class="add-task-closed">
+        <i class="far fa-plus fa-2x"></i>
+        <span class="add-task-closed-span">New task</span>
+    </div>
+    
+    <!--Oppened -->
+    <div *ngIf="inputStatus" (click)="inputTask()" class="add-task-opened">
+        <div class="addtask-left">
+            <i class="fal fa-plus-circle fa-2x click" (click)="addTask()"></i>
+            <div class="addtask-left-input" (keypress)="preventDefault($event)" *ngIf="inputStatus" (input)="onInputChange($event)" contenteditable="true" #taskInput></div>
+        </div>
+    
+        <div class="addtask-right">
+            <div (click)="projectSelect.open()" class="addtask-date red">{{ project }}
+                <mat-select style="width: 0px;" #projectSelect>
+                    <div *ngFor="let project of projects">
+                        <mat-option (click)="getProject($event)">{{ project.project }}</mat-option>
+                    </div>
+                </mat-select>
+            </div>
+            <div (click)="dateToday($event) && picker.open()" class="addtask-date"
+                [ngClass]="date == today ? 'green' : date == 'No date selected' ?  'red' : date < today ? 'overdue' : 'yellow'">
+                {{ isDateSelected(date) ? (date | date: 'MMMM d, y') : date }}
+                <mat-datepicker #picker></mat-datepicker>
+                <input style="visibility: hidden; max-width: 10px; position:absolute" matInput [matDatepicker]="picker" (dateChange)="updateDate($event.value, 0)" id="ok" #dateInput >   
+            </div>
+
+            <div (click)="repeating()">
+                <i class="fas fa-repeat fa-2x click"  [ngClass]="repeat ? 'high' : 'low'"></i>
+            </div>
+            
+            <div (click)="selectPriority()">
+                <i class="fas fa-flag fa-2x click"  [ngClass]="priority == 1 ? 'high' : priority == 2 ? 'medium' : 'low'"></i>
+                <mat-select style="width:0px;" #prioritySelect>
+                    <mat-option (click)="getPriority($event)"><i class="fas fa-flag high" style="margin-right:8px"></i>Alta</mat-option>
+                    <mat-option (click)="getPriority($event)"><i class="fas fa-flag medium" style="margin-right:8px"></i>Média</mat-option>
+                    <mat-option (click)="getPriority($event)"><i class="fas fa-flag low" style="margin-right:8px"></i>Baixa</mat-option>
+                </mat-select>
+            </div>
+        </div>   
+        
+
+    </div>    
+
+</div>
+    
+<!-- Right menu -->
+<div class="menu">
+
+    <div class="search">
+        <div>
+            <input type="text" placeholder="Search">
+            <i class="fal fa-search fa-lg"></i>
+        </div>
+    </div>
+    <hr>
+    <div class="submenu" (click)="filterData($event)" id="Inbox">
+        <i class="fal fa-inbox-in fa-lg"></i>   
+        <span>Inbox</span>
+    </div>
+    <div class="submenu selected" (click)="filterData($event)" id="Today">
+        <i class="fal fa-calendar-day fa-lg"></i>
+        <span>Today</span>
+    </div>
+    <div class="submenu" (click)="filterData($event)" id="This week">
+        <i class="fal fa-calendar-week fa-lg"></i>
+        <span>This week</span>
+    </div>
+    <div class="submenu" (click)="filterData($event)" id="Overdue">
+        <i class="fal fa-calendar-exclamation fa-lg"></i>
+        <span>Overdue</span>
+    </div>
+    <div class="submenu" (click)="filterData($event)" id="Completed">
+        <i class="fal fa-check-square fa-lg"></i>
+        <span>Completed</span>
+    </div>
+    <hr>
+    <div *ngFor="let project of projects">
+        <div class="submenu" (click)="filterData($event)" id="{{ project.project }}" *ngIf="project.project != 'Inbox'">
+            <i class="fal fa-layer-group fa-lg"></i>
+            <span>{{ project.project }}</span>
+        </div>
+    </div>
+
+</div>
+
+
+

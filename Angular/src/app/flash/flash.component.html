@@ -1,0 +1,81 @@
+
+
+<div style="display: flex;">
+
+    <!-- Start -->
+    <div *ngIf="startStatus" class="card">
+        <div class="head">
+            <span></span>
+        </div>
+        <div class="body" >
+            <div class="content"><span>Vocabulary<br>You have {{ totalCards }} new cards</span></div>
+        </div>   
+        <div class="bottom">
+            <button (click)="start()" >Start</button>
+        </div>
+    </div>
+
+    <!-- End -->
+    <div *ngIf="stopStatus" class="card">
+        <div class="body">
+            <div class="content"><span>You've finished all cards today</span></div>
+        </div>   
+    </div>
+
+    <!-- Image card front -->
+    <div *ngIf="cardStatus && !startStatus && !stopStatus"  class="card" #frontCard>
+        <div class="head">
+            <i (click)="speakText()" class="fas fa-play fa-lg"></i>
+            <i (click)="editCard()" class="fas fa-edit fa-lg"></i>
+            <i class="fas fa-redo-alt fa-flip-horizontal fa-lg"></i>
+        </div>
+        <div class="body">
+            <div class="content"><span>{{ front }}</span></div>
+        </div>
+        <div class="bottom">
+            <button (click)="showAnswer()" >Show answer</button>
+        </div>
+    </div>
+    
+    <!-- Image card back -->
+    <div *ngIf="!cardStatus && !startStatus && !stopStatus" class="card">
+        <div class="head">
+            <i (click)="speakText()" class="fas fa-play fa-lg"></i>
+            <i (click)="editCard()" class="fas fa-edit fa-lg"></i>
+            <i class="fas fa-redo-alt fa-flip-horizontal fa-lg"></i>
+        </div>
+        <div class="body">
+            <img *ngIf="img && back_one_status" src="{{ back_one }}">
+            <div class="content" *ngIf="!img && back_one_status"><span>{{ back_one }}</span></div>
+            <img *ngIf="img && back_two_status" src="{{ back_two }}">
+            <div class="content" *ngIf="!img && back_two_status"><span>{{ back_two }}</span></div>
+            <img *ngIf="img && back_three_status" src="{{ back_three }}">
+            <div class="content" *ngIf="!img && back_three_status"><span>{{ back_three }}</span></div>
+            <div class="back" *ngIf="totalBack > 1">
+                <i *ngIf="totalBack > 1" (click)="selectBack(1)" class="fa-circle fa-sm" [ngClass]="{'fas' : selectedBack === 1, 'fal' : selectedBack !== 1}"></i>
+                <i *ngIf="totalBack > 1" (click)="selectBack(2)" class="fa-circle fa-sm" [ngClass]="{'fas' : selectedBack === 2, 'fal' : selectedBack !== 2}"></i>
+                <i *ngIf="totalBack > 2" (click)="selectBack(3)" class="fa-circle fa-sm" [ngClass]="{'fas' : selectedBack === 3, 'fal' : selectedBack !== 3}"></i>
+            </div>
+        </div>
+        <div class="bottom">
+            <button (click)="nextCard()" >Right</button>
+            <button (click)="nextCard()" >Wrong</button>
+        </div>
+    </div>
+
+</div>
+
+<!-- Right menu -->
+<div class="menu">
+    <div class="submenu selected" id="Home">
+        <i class="fal fa-home fa-lg"></i>   
+        <span>Home</span>
+    </div>
+    <hr>
+    <div *ngFor="let deck of decks">
+        <div class="submenu">
+            <i class="fal fa-graduation-cap fa-lg"></i>
+            <span>{{ deck.deck }} </span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="container">
+
+    <div class="box">
+        
+        <table class="habits">
+            <tr>
+                <th colspan="100%">Habits tracker</th>
+            </tr>
+            <tr>
+                <th>
+                    <i class="fas fa-analytics fa-sm"></i>
+                    Habit</th>
+                <th *ngFor="let date of displayedDates">
+                    {{ date | date: 'dd'}}
+                    <br>
+                    
+                </th>
+            </tr>
+            <tr *ngFor="let habit of habits; let i = index" [ngClass]="i % 2 === 0 ? 'even' : 'odd'">
+                <td>{{ habit.habit }}</td>
+                <td *ngFor="let date of displayedDates" (click)="onClick($event)" class="click">
+                    <i [ngClass]="          
+                    getHabitProgress(habit.id, date) == 1 ? 'fad fa-check-square fa-lg green click' : 
+                    getHabitProgress(habit.id, date) == 2 ? 'fad fa-minus-square fa-lg yellow click' : 
+                    getHabitProgress(habit.id, date) == 3 ? 'fad fa-times-square fa-lg red click' : 'fal fa-square fa-lg gray click' ">
+                    </i>
+                    <span class="completed" id="{{ getHabitProgress(habit.id, date) }}"></span>
+                    <span class="date" id="{{ date }}"></span>
+                    <span class="habit" id="{{ habit.id }}"></span>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</div>

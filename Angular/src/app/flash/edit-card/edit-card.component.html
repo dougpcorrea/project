@@ -1,0 +1,36 @@
+<!-- Input form for users to fill question and answer -->
+<div class="container">
+    <div class="title">
+        <span>Edit Flashcard</span>
+        <i (click)="close()" class="fas fa-times-circle fa-2x"></i>    
+    </div>
+    
+    <div class="wrapper">
+        <div *ngIf="erro" class="error-con"> 
+            <span class="error">{{ error }}</span>
+        </div>
+        
+    </div>
+    <div class="label"><span>Front:</span></div>        
+    <textarea [(ngModel)]="question" class="input" id="question" rows="3" maxlength="150" (input)="limitRows($event)" (keydown)="preventBreak($event)"></textarea>
+    <div class="label">
+        <span>Back:</span>
+        <div class="left">
+            <i (click)="selectAnswer(1)" class="fa-circle fa-sm" [ngClass]="{'fas' : selectedAnswer === 1, 'fal' : selectedAnswer !== 1}"></i>
+            <i (click)="selectAnswer(2)" class="fa-circle fa-sm" [ngClass]="{'fas' : selectedAnswer === 2, 'fal' : selectedAnswer !== 2}"></i>
+            <i (click)="selectAnswer(3)" class="fa-circle fa-sm" [ngClass]="{'fas' : selectedAnswer === 3, 'fal' : selectedAnswer !== 3}"></i>
+        </div>
+        <div class="right">
+            <i (click)="changeType('image')" class="fas fa-image" [ngClass]="{'primary-color' : selectedAnswerType === 'image'}"></i>
+            <i (click)="changeType('text')" class="fas fa-text" [ngClass]="{'primary-color' : selectedAnswerType === 'text'}"></i>
+            <i id="answer_three_type" class="fas fa-paperclip"></i>
+        </div>
+
+    </div>
+    <textarea [(ngModel)]="answerOne" class="input" rows="3" maxlength="200" (input)="limitRows($event)" (keydown)="preventBreak($event)" [ngClass]="{'hide' : selectedAnswer !== 1}"></textarea>
+    <textarea [(ngModel)]="answerTwo" class="input hide" rows="3" maxlength="200" (input)="limitRows($event)" (keydown)="preventBreak($event)" [ngClass]="{'hide' : selectedAnswer !== 2}"></textarea>
+    <textarea [(ngModel)]="answerThree" class="input hide" rows="3" maxlength="200" (input)="limitRows($event)" (keydown)="preventBreak($event)" [ngClass]="{'hide' : selectedAnswer !== 3}"></textarea>
+    <button (click)="save()" class="save-btn">Save</button>
+    
+</div>
+

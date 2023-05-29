@@ -1,0 +1,50 @@
+<div class="container">
+    <div class="box">
+        <table class="tabela">
+            <tr>
+                <th colspan="2">Today's Birthdays</th>
+            </tr>
+            <tr *ngFor="let birthday of todayBirthdays">
+                <td class="today-name">
+                    <span>{{ birthday.name }}</span>
+                    <i class="fal fa-birthday-cake fa-lg"></i>
+                </td>
+            </tr>
+            <tr *ngIf="todayBirthdays.length === 0">
+                <td colspan="2">No anniversaries today</td>
+            </tr>
+        </table>
+        
+        <table class="tabela">
+            <tr>
+                <th colspan="2">Upcoming Birthdays</th>
+            </tr>
+            <tr *ngFor="let birthday of weekBirthdays; let i = index" [ngClass]="i % 2 === 0 ? 'even' : 'odd'">
+                <td>{{ birthday.date | date: 'd' }}</td>
+                <td>{{ birthday.name }}</td>  
+            </tr>     
+        </table>
+    </div>
+
+
+
+    <div class="box">
+        <div class="gratitude">
+            <div class="gratitude-head">
+                <span>Afirmations</span>
+                <i class="fab fa-gratipay fa-lg"></i>
+            </div>
+
+            <div class="gratitude-body">
+                <div class="gratitude-inputs">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="gratitude-buttons">
+                    <button>Thank</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
