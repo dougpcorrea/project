@@ -56,7 +56,7 @@
                 }
               ],
               "outputHashing": "all",
-              "outputPath": "../../public/angular"
+              "outputPath": "dist/project"
             },
             "development": {
               "buildOptimizer": false,
