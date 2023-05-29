@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'api.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'production': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'projects',
         'USER': 'root',
@@ -89,7 +89,7 @@ DATABASES = {
         'HOST': '',
         'PORT': '',
     },
-    'production': {
+    'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'project_31jh',
         'USER': 'root',
@@ -134,8 +134,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
-
+STATIC_URL = os.path.join(BASE_DIR, 'static'),
 STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
