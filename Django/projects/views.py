@@ -120,14 +120,7 @@ class BirthdayAPIView(APIView):
 
 class SettingsAPIView(APIView):
     def get(self, request):
-        where_condition = request.query_params
         queryset = Settings.objects.all()
-
-        if where_condition:
-            setting = where_condition.get('setting')
-            if setting:
-                queryset = queryset.filter(Q(setting__icontains=setting))
-
         serializer = SettingsSerializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -146,7 +139,9 @@ class CardsAPIView(APIView):
     def get(self, request):
         queryset = Cards.objects.all()
         serializer = CardsSerializer(queryset, many=True)
+        print(os.environ.get('DJANGO_ENV'))
         return Response(serializer.data)
+
 
     def put(self, request):
         data = request.data

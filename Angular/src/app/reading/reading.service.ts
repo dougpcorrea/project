@@ -19,7 +19,7 @@ export class DataService {
   }
 
   get_settings() {
-    return this.httpClient.get<any>('http://localhost:8000/api/settings?setting=last_book')
+    return this.httpClient.get<any>('http://localhost:8000/api/settings')
   }
 
   post_settings(value: number) {

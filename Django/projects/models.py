@@ -77,7 +77,7 @@ class Birthday(models.Model):
 class Settings(models.Model):
     id = models.AutoField(primary_key=True)
     setting = models.CharField(max_length=255)
-    value = models.SmallIntegerField()
+    value = models.CharField(max_length=255)
 
     def __str__(self):
         return self.setting
