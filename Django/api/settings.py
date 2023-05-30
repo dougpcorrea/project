@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'api.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'production': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'projects',
         'USER': 'root',
@@ -89,7 +89,7 @@ DATABASES = {
         'HOST': '',
         'PORT': '',
     },
-    'production': {
+    'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'project_31jh',
         'USER': 'root',
