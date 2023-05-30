@@ -17,14 +17,14 @@ export class FlashComponent implements OnInit {
     @ViewChild('frontCard') frontCard!: ElementRef;
 
     carouselInterval: any;
-    deck!: string
-    front!: string
-    back_one!: string
-    back_two!: string
-    back_three!: string
+    deck: string = ''
+    front: string = ''
+    back_one: string = ''
+    back_two: string = ''
+    back_three: string = ''
     voice = 'Google US English'
-    totalCards!: number
-    index = 0
+    totalCards: number = 0
+    index: number = 0
     selectedBack: number = 1
     totalBack: number = 1
     cardStatus = true
@@ -55,8 +55,10 @@ export class FlashComponent implements OnInit {
         this.dataService.get_cards().subscribe(res => {
             this.allCards = res.filter((card: { deck: string, id: number }) => card.deck === 'Vocabulary')
             this.front = this.allCards[this.index].front
-            this.totalCards = this.allCards.length
-
+            if (this.allCards.length > 0){
+                this.totalCards = this.allCards.length
+            }
+            
             if (this.allCards[this.index].back_one !== null && this.allCards[this.index].back_one !== '') { this.totalBack = this.totalBack + 1 }
             if (this.allCards[this.index].back_two !== null && this.allCards[this.index].back_two !== '') { this.totalBack = this.totalBack + 1 }
             if (this.allCards[this.index].back_three !== null && this.allCards[this.index].back_three !== '') { this.totalBack = this.totalBack + 1 }
@@ -180,6 +182,9 @@ export class FlashComponent implements OnInit {
     }
 
     start() {
+        if (this.allCards.length === 0){
+            return
+        }
         this.startStatus = !this.startStatus
         this.speakText()
     }

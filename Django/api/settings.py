@@ -80,24 +80,28 @@ WSGI_APPLICATION = 'api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'production': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'projects',
-        'USER': 'root',
-        'PASSWORD': 'c1d2e3n4A!',
-        'HOST': '',
-        'PORT': '',
-    },
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'project_31jh',
-        'USER': 'root',
-        'PASSWORD': 'bsVMpxV4gjmzor86gEt2EmX29XEfnhyD',
-        'HOST': 'dpg-chqhut2k728ivvtsm210-a.ohio-postgres.render.com',
-        'PORT': '5432',
+if os.environ.get('DJANGO_ENV') == 'prod':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'project_31jh',
+            'USER': 'root',
+            'PASSWORD': 'bsVMpxV4gjmzor86gEt2EmX29XEfnhyD',
+            'HOST': 'dpg-chqhut2k728ivvtsm210-a.ohio-postgres.render.com',
+            'PORT': '5432',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'projects',
+            'USER': 'root',
+            'PASSWORD': 'c1d2e3n4A!',
+            'HOST': '',
+            'PORT': '',
+        },
+    }
 
 
 # Password validation
