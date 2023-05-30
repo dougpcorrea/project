@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 
 
 const routes: Routes = [
-
+  {path: 'dashboard', component: environment.dashboard},
   {path: 'habits', component: HabitsComponent},
   {path: 'tasks', component: TasksComponent},
   {path: 'flash', component: FlashComponent},
