@@ -30,7 +30,7 @@ export class DataService {
     }
 
     const taskInterface: TaskInterface = {id, task, date, priority, project, ordering, status, subtask, repeat};
-    return this.httpClient.post(`${environment.apiUrl}task`, taskInterface).subscribe();
+    return this.httpClient.post(`${environment.apiUrl}task/`, taskInterface).subscribe();
   }
 
   deleteTask(id: number){
