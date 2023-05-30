@@ -3,11 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { FlashComponent } from './flash/flash.component';
 import { HabitsComponent } from './habits/habits.component';
 import { TasksComponent } from './tasks/tasks.component';
-import { environment } from 'src/environments/environment';
-
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
-  {path: 'dashboard', component: environment.dashboard},
+//   {path: 'dashboard', component: DashboardComponent},
   {path: 'habits', component: HabitsComponent},
   {path: 'tasks', component: TasksComponent},
   {path: 'flash', component: FlashComponent},
