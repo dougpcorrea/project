@@ -1,56 +1,44 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
    
 .title {
-    display: fixed;
-    position: fixed;
+    display: flex;
+    align-items: center;
     z-index: 1;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 12%;
+    height: 5rem;
+    margin-left: 15rem;
+    margin-right: 30rem;
 
-    .title-items {
-        display: flex;  
-        padding-left: 19.5%;
-        padding-right: 27.6%;
-        padding-top: 2.65vw;
-        background-color: #f4f7fa;
-        z-index: 2;
-        align-items: center;
-        justify-content: center;
-        
-    
-        h1{
-            flex-grow: 1;
-            padding-top: 0.8vw;
-            font-size: 1.1vw;
-        }
-    
-        h2 {
-            display: flex;
-            align-items: center;
-            margin-left: 0.53vw;
-            padding-top: 0.8vw;
-            font-size: 1.05vw;
-        }
-    
-        i{
-            font-size: 1.3vw;
-        }
+    h1{
+        padding-top: 1rem;
+        padding-left: 1rem;
+        font-size: 1.3rem;
+        width: 91.5%;
     }
+
+    h2 {
+        display: flex;
+        align-items: center;
+        margin-left: 0.6rem;
+        padding-top: 1.2rem;
+        font-size: 1.2rem;
+    }
+
+    i{
+        font-size: 1.5rem;
+    }
+    
 }
 
 .menu{
     display: flex;
     flex-direction: column;
-    padding: 2.1vw 0 0 0;
+    padding: 2rem 0 0 0;
     background: #FCB62B;
     right: 0;
     position: fixed;
-    row-gap: 0.4vw;
+    row-gap: 0.3rem;
     top: 0;
-    width: 12.8vw;
-    height: 100vh;
+    width: 15rem;
     box-shadow: 0.05vw 0 1.05vw 0 #8690a3;
     color: white;
     z-index: 3;
@@ -58,30 +46,30 @@
 
     .submenu:hover{
         background-color: white;
-        color: #757575;
+        color: #494949;
     }
     .submenu{
-        height: 2vw;
+        height: 2.5rem;
         display: flex;
         position: relative;
         justify-content: center;
         align-items: center;
-        column-gap: 12%;
-        margin: 0 0.8vw 0 0.8vw;
-        padding-left: 0.55vw;
-        border-radius: 0.34vw;
+        column-gap: 10%;
+        margin: 0 0.75rem 0 0.75rem;
+        padding-left: 0.5rem;
+        border-radius: 0.3rem;
         cursor: pointer;
 
         span{
             display: flex;
             position: relative; 
             width: 70%;
-            font-size: 0.78vw;
+            font-size: 1rem;
             pointer-events: none;
         }
 
         i{
-            font-size: 1.1vw;
+            font-size: 1.25rem;
             pointer-events: none;
         }
 
@@ -90,15 +78,15 @@
     .search{
         display: flex;
         justify-content: center;
-        margin-bottom: 1.05vw;
+        margin-bottom: 1.1vw;
 
         div{
             display: flex;
             justify-content: center;
             align-items: center;
-            padding-right: 0.8vw;
-            border-radius: .26vw;
-            height: 1.85vw;
+            padding-right: 0.8rem;
+            border-radius: 0.25rem;
+            height: 2rem;
             width: 75%;
             background-color: white;
 
@@ -107,14 +95,14 @@
                 width: 90%;
                 background-color: white;
                 border: 0;
-                color: #757575;
+                color: #494949;
                 text-align: center;
-                font-size: 0.71vw;
+                font-size: 0.9rem;
             }
 
             i{
-                font-size: 0.75vw;
-                color: #757575;
+                font-size: 0.9rem;
+                color: #494949;
             }
         }
         
@@ -122,46 +110,44 @@
     
     hr {
         border: 0;
-        height: 0.05vw;
+        height: 0.05rem;
         background: white;
-        margin: 0.67vw 0.4vw;
+        margin: 0.65rem 0.75rem;
     }
 
     .selected{
         background-color: white;
-        color: #757575;
+        color: #494949;
     }
 }   
 
 .add-task{
-
     background-color: #f4f7fa;
     z-index: 1;
     display: flex;
-    position: sticky;
-    bottom: 7%;
-    padding: 1.5% 0 4.5% 0;
     width: 100%;
-    font-size: 0.64vw;
-
+    font-size: 0.8rem;
+    
+    .add-task-closed{
+        cursor: pointer !important;
+    }
 
     .add-task-closed,
     .add-task-opened {
         display: flex;
         border: none;
         width: 100%;
-        padding: 0.59vw 1.33vw 0.59vw 1.33vw;
+        padding: 0.65rem 1.5rem 0.65rem 1.5rem;
         align-items: center;
-        border-radius: 0.43vw;
+        border-radius: 0.5rem;
         background-color: #fff;
-        box-shadow: 0 0.21vw 0.43vw #e6edef;
+        box-shadow: 0 0.25rem 0.4rem #e6edef;
         overflow: hidden;
         transition-duration: 0.1s;
         cursor: text;
-        margin-top: 0;
         justify-content: center;
-        margin-right: 29%;
-        margin-left: 13%;
+        margin-left: 15rem;
+        margin-right: 31rem;
     
         .addtask-left{
             float: left;
@@ -204,7 +190,7 @@
         }
 
         .add-task-closed-span{
-            font-size: 0.8vw;
+            font-size: 0.9rem;
             margin-left: 0.8vw;
         }
     }
@@ -216,18 +202,16 @@
 
 .preview{
     display: flex;
-    box-sizing: border-box;
-    padding: 0.53vw 1.33vw 0.53vw 1.07vw;
+    padding: 0.65rem 1.5rem 0.65rem 1.5rem;
     height: auto;
-    width: 54%;
-    border-radius: 0.43vw;
+    width: 56%;
+    border-radius: 0.5rem;
     background-color: #fff;
-    margin: 0 0 0.64vw 0;
-    box-shadow: 0 0.21vw 0.43vw #e6edef;
+    margin: 0 0 0.75rem 0;
+    margin-right: 15rem !important;
+    box-shadow: 0 0.25rem 0.4rem #e6edef;
     align-items: center;
-    font-size: 0.64vw;
-    margin-right: 29%;
-    margin-left: 13%;
+    font-size: 0.9rem;
     overflow: auto;
 
     .preview-handle{
@@ -264,27 +248,49 @@
 
 }
 
-//.cdk-drag-preview,
+@media (max-width: 1600px) {
+    .taskbox {
+        width: auto !important;
+        margin-left: 0px !important;
+        margin-right: 17rem !important;
+    }
+
+    .title {
+
+        margin-left: 0px !important;
+        margin-right: 17rem !important;
+    }
+
+    .add-task-opened, .add-task-closed {
+        width: 100% !important;
+        margin-left: 0px !important;
+        margin-right: 18.25rem !important;
+    }
+}
+
+@media (max-height: 936px) {
+    .taskbox {
+        max-height: 19.9rem !important;
+    }
+}
+
 .taskbox {
-    margin-top: 4%;
     z-index: 18;
-    margin-right: 29%;
-    margin-left: 13%;
-    max-height: 31.2vw;
-    overflow: auto;
-    
+    margin-left: 15rem;
+    margin-right: 30rem;
+    max-height: 38.6rem;
+    overflow: scroll;
 
     .task{
         display: flex;
-        box-sizing: border-box;
-        padding: 0.53vw 1.33vw 0.53vw 1.07vw;
-        height: auto;
-        border-radius: 0.43vw;
-        background-color: #fff;
-        margin: 0 0 0.64vw 0;
-        box-shadow: 0 0.21vw 0.43vw #e6edef;
+        box-shadow: 0 0.25rem 0.4rem #e6edef;
+        padding: 0.65rem 1.5rem 0.65rem 1.5rem;
+        border-radius: 0.5rem;
+        background-color: var(--secondary-color);
+        margin: 0 0 0.75rem 0;
         align-items: center;
-        font-size: 0.64vw;
+        font-size: 0.75rem;
+
 
         .task-item:hover .fa-circle,
         .task-item .fa-check-circle {
@@ -300,18 +306,18 @@
 
         .task-item{
             cursor: pointer;
-            margin-left: 1.07vw;
+            margin-left: 1rem;
             display: flex;
             align-items: center;
         }
     
         .task-name {
             height: auto;
-            font-size: 0.71vw;
+            font-size: 0.9rem;
             width: 100%;
-            margin-left: 1.33vw;
-            margin-right: 1.33vw;
-            padding-bottom: 0.17vw;
+            margin-left: 1.25rem;
+            margin-right: 1rem;
+            padding-bottom: 0.25rem;
         }
 
         .task-name:focus {
@@ -319,8 +325,7 @@
         }
 
         .task-counter {
-            font-size: 0.71vw;
-            font-size: 0.78vw;
+            font-size: 0.9rem;
             white-space: nowrap;
             cursor: default;
             width: 4%;
@@ -328,13 +333,12 @@
 
         .task-date {
             display: flex;
-            height: 1.28vw;
-            font-size: 0.64vw;
+            font-size: 0.8rem;
             white-space: nowrap;
-            padding: 0.11vw 0.53vw 0.11vw 0.53vw;
-            border-radius: 0.26vw;
-            margin-left: 1.07vw;
-            box-shadow: 0 0.04vw 0.85vw #e6edef;
+            padding: 0.1rem 0.5rem 0.15rem 0.55rem;
+            border-radius: 0.25rem;
+            margin-left: 1rem;
+            box-shadow: 0 0.05rem 0.75rem #e6edef;
             color: white;
             justify-content: center;
             align-items: center;
@@ -345,22 +349,21 @@
             position: relative;
             float: right;
             display: flex;
-            column-gap: 1.33vw;
-            margin-left: 1.07vw;
+            column-gap: 1rem;
+            margin-left: 1rem;
             align-items: center;
             justify-content: center;
-            font-size: 0.71vw;
+            font-size: 0.8rem;
         }
     }
 
     .subtasks{    
-        margin: -0.64vw 0 0.64vw 0;
+        margin: -0.75rem 0 0.75rem 0;
         background-color: white;
-        border-radius: 0 0 0.43vw 0.43vw;
-        box-shadow: 0 0.21vw 0.43vw #e6edef;
+        border-radius: 0 0 0.4rem 0.4rem;
         display: none;
         border-collapse: collapse;
-        font-size: 0.64vw;
+        font-size: 0.75rem;
 
         .subtask:first-child{
             border-top: 0.05vw solid rgba(0, 0, 0, 0.1);

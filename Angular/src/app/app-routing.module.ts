@@ -1,19 +1,30 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FlashComponent } from './flash/flash.component';
-import { HabitsComponent } from './habits/habits.component';
-import { TasksComponent } from './tasks/tasks.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { HomeComponent } from './home/home.component';
+import { FlashComponent } from './system/flash/flash.component';
+import { HabitsComponent } from './system/habits/habits.component';
+import { SystemComponent } from './system/system.component';
+import { TasksComponent } from './system/tasks/tasks.component';
 
 const routes: Routes = [
-//   {path: 'dashboard', component: DashboardComponent},
-  {path: 'habits', component: HabitsComponent},
-  {path: 'tasks', component: TasksComponent},
-  {path: 'flash', component: FlashComponent},
+    {
+        path: '',
+        component: HomeComponent,
+    },
+    {
+        path: '',
+        component: SystemComponent,
+        children: [
+            { path: 'habits', component: HabitsComponent },
+            { path: 'tasks', component: TasksComponent },
+            { path: 'flash', component: FlashComponent },
+        ]
+    },
+
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule { }

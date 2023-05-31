@@ -53,34 +53,34 @@ export class FlashComponent implements OnInit {
         }
         this.dataService.getDecks().subscribe(res => { this.decks = res })
         this.dataService.get_cards().subscribe(res => {
-            this.allCards = res.filter((card: { deck: string, id: number }) => card.deck === 'Vocabulary')
-            this.front = this.allCards[this.index].front
-            if (this.allCards.length > 0){
+            if (res.length > 0){
+                this.allCards = res.filter((card: { deck: string, id: number }) => card.deck === 'Vocabulary')
+                this.front = this.allCards[this.index].front
                 this.totalCards = this.allCards.length
-            }
-            
-            if (this.allCards[this.index].back_one !== null && this.allCards[this.index].back_one !== '') { this.totalBack = this.totalBack + 1 }
-            if (this.allCards[this.index].back_two !== null && this.allCards[this.index].back_two !== '') { this.totalBack = this.totalBack + 1 }
-            if (this.allCards[this.index].back_three !== null && this.allCards[this.index].back_three !== '') { this.totalBack = this.totalBack + 1 }
 
-            if (this.allCards[this.index].back_one?.startsWith('<img>')) {
-                this.img = true
-                this.back_one = `../../../assets/cards/${this.allCards[this.index].back_one.split('<img>')[1]}`
-            } else {
-                this.img = false
-                this.back_one = this.allCards[this.index].back_one
-            }
-
-            if (this.allCards[this.index].back_two?.startsWith('<img>')) {
-                this.back_two = `../../../assets/cards/${this.allCards[this.index].back_two.split('<img>')[1]}`
-            } else {
-                this.back_two = this.allCards[this.index].back_two
-            }
-
-            if (this.allCards[this.index].back_three?.startsWith('<img>')) {
-                this.back_three = `../../../assets/cards/${this.allCards[this.index].back_three.split('<img>')[1]}`
-            } else {
-                this.back_three = this.allCards[this.index].back_three
+                if (this.allCards[this.index].back_one !== null && this.allCards[this.index].back_one !== '') { this.totalBack = this.totalBack + 1 }
+                if (this.allCards[this.index].back_two !== null && this.allCards[this.index].back_two !== '') { this.totalBack = this.totalBack + 1 }
+                if (this.allCards[this.index].back_three !== null && this.allCards[this.index].back_three !== '') { this.totalBack = this.totalBack + 1 }
+    
+                if (this.allCards[this.index].back_one?.startsWith('<img>')) {
+                    this.img = true
+                    this.back_one = `../../../assets/cards/${this.allCards[this.index].back_one.split('<img>')[1]}`
+                } else {
+                    this.img = false
+                    this.back_one = this.allCards[this.index].back_one
+                }
+    
+                if (this.allCards[this.index].back_two?.startsWith('<img>')) {
+                    this.back_two = `../../../assets/cards/${this.allCards[this.index].back_two.split('<img>')[1]}`
+                } else {
+                    this.back_two = this.allCards[this.index].back_two
+                }
+    
+                if (this.allCards[this.index].back_three?.startsWith('<img>')) {
+                    this.back_three = `../../../assets/cards/${this.allCards[this.index].back_three.split('<img>')[1]}`
+                } else {
+                    this.back_three = this.allCards[this.index].back_three
+                }
             }
         })
     }

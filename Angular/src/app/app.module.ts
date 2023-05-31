@@ -19,16 +19,18 @@ import { QuillModule } from 'ngx-quill';
 
 
 import { AppComponent } from './app.component';
-import { SidenavComponent } from './menu/sidenav.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { BodyComponent } from './body/body.component';
-import { HabitsComponent } from './habits/habits.component';
-import { TasksComponent } from './tasks/tasks.component';
-import { ReadingComponent } from './reading/reading.component';
-import { GratitudeComponent } from './gratitude/gratitude.component';
+import { SidenavComponent } from './system/menu/sidenav.component';
+import { DashboardComponent } from './system/dashboard/dashboard.component';
+import { BodyComponent } from './system/body/body.component';
+import { HabitsComponent } from './system/habits/habits.component';
+import { TasksComponent } from './system/tasks/tasks.component';
+import { ReadingComponent } from './system/reading/reading.component';
+import { GratitudeComponent } from './system/gratitude/gratitude.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FlashComponent } from './flash/flash.component';
-import { EditCardComponent } from './flash/edit-card/edit-card.component';
+import { FlashComponent } from './system/flash/flash.component';
+import { EditCardComponent } from './system/flash/edit-card/edit-card.component';
+import { SystemComponent } from './system/system.component';
+import { HomeComponent } from './home/home.component';
 
 
 
@@ -44,6 +46,8 @@ import { EditCardComponent } from './flash/edit-card/edit-card.component';
     GratitudeComponent,
     FlashComponent,
     EditCardComponent,
+    SystemComponent,
+    HomeComponent,
   ],
   imports: [
     ApplicationModule,

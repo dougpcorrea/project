@@ -86,8 +86,8 @@ if os.environ.get('DJANGO_ENV') == 'prod':
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'project_31jh',
             'USER': 'root',
-            'PASSWORD': 'bsVMpxV4gjmzor86gEt2EmX29XEfnhyD',
-            'HOST': 'dpg-chqhut2k728ivvtsm210-a.ohio-postgres.render.com',
+            'PASSWORD': os.environ.get('DB_PASSWORD'),
+            'HOST': os.environ.get('DB_HOST'),
             'PORT': '5432',
         }
     }

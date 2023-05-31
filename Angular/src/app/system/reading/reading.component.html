@@ -1,8 +1,8 @@
 <div *ngIf="player" class="player">
     <div class="cover" >
-        <img style="width:32px; height:46px;" src="{{ coverSrc }}">
+        <img style="width:32px; height:46px;" [src]="coverSrc">
     </div>
-    <div class="info">
+    <div class="info">  
         <span #title class="title"></span>
         <span #autor class="autor"></span>
     </div>
@@ -23,5 +23,5 @@
 </div>
 
 <audio (timeupdate)="updateCurrentTime()" (loadeddata)="dataLoaded()" #audio>
-    <source src="{{ musicSrc }}"  >
+    <source [src]="musicSrc"  >
 </audio>

@@ -27,7 +27,7 @@ export class ReadingComponent implements OnInit {
     currentTime = '0:00:00'
     duration = ''
 
-    booksFolder = '../../../assets/books/'
+    booksFolder: string = '../../../assets/books/'
 
     allBooks!: Array<any>
 

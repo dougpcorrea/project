@@ -104,8 +104,8 @@ export class TasksComponent implements OnInit {
                     task.date = 'No date selected';
                 }
             });
-            this.filteredTasks = res;
-            this.dataSource = res.filter((task: any) => task.status === 0 && task.date <= this.today && task.subtask === 0).sort((a: any, b: any) => a.ordering - b.ordering);
+            this.dataSource = res;
+            this.filteredTasks = res.filter((task: any) => task.status === 0 && task.date <= this.today && task.subtask === 0).sort((a: any, b: any) => a.ordering - b.ordering);
             this.subtasks = res.filter((task: any) => task.subtask !== 0).sort((a: any, b: any) => a.ordering - b.ordering);
         });
         this.dataService.getKarma().subscribe(res => {
@@ -182,42 +182,35 @@ export class TasksComponent implements OnInit {
         this.document.querySelectorAll('.selected').forEach(element => { element.classList.remove('selected'); });
         element.target.classList.add('selected')
 
-        this.dataService.getTasks().subscribe((res: any[]) => {
-            res.forEach((task: any) => {
-                if (task.date === null) {
-                    task.date = 'No date selected';
-                }
-            });
             if (id === 'Today') {
-                this.dataSource = res.filter((task: any) =>
+                this.filteredTasks = this.dataSource.filter((task: any) =>
                     task.status === 0 &&
                     task.date <= this.today &&
                     task.subtask === 0
                 ).sort((a: any, b: any) => a.ordering - b.ordering);
             } else if (id === 'This week') {
-                this.dataSource = res.filter((task: any) =>
+                this.filteredTasks = this.dataSource.filter((task: any) =>
                     task.status === 0 &&
                     task.date >= this.today &&
                     task.date <= this.endDate &&
                     task.subtask === 0
                 ).sort((a: any, b: any) => a.ordering - b.ordering);
             } else if (id === 'Overdue') {
-                this.dataSource = res.filter((task: any) =>
+                this.filteredTasks = this.dataSource.filter((task: any) =>
                     task.status === 0 &&
                     task.date < this.today &&
                     task.subtask === 0
                 ).sort((a: any, b: any) => a.ordering - b.ordering);
             } else if (id === 'Completed') {
                 this.isDisabled = true;
-                this.dataSource = res.filter((task: any) =>
+                this.filteredTasks = this.dataSource.filter((task: any) =>
                     task.status === 1 &&
                     task.subtask === 0
                 ).sort((a: any, b: any) => a.ordering - b.ordering);
             } else {
-                this.dataSource = res.filter((task: any) => task.status === 0 && task.project === id && task.subtask === 0).sort((a: any, b: any) => a.ordering - b.ordering);
+                this.filteredTasks = this.dataSource.filter((task: any) => task.status === 0 && task.project === id && task.subtask === 0).sort((a: any, b: any) => a.ordering - b.ordering);
             }
-        });
-
+   
         if (this.title === 'Inbox' || this.title === 'Today' || this.title === 'This week' || this.title === 'Overdue' || this.title === 'Complete'){
             this.project = 'Inbox'
         } else {

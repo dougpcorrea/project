@@ -1,16 +1,15 @@
 <!-- Title -->
 <div class="title">
-    <div class="title-items">
+
         <h1>{{ title }}</h1>
         <i [ngClass]="completedTasks < 3 ? 'fal fa-circle fa-2x' : 'fas fa-check-circle fa-2x high'"></i>
         <h2>{{ completedTasks }}/3</h2>
-    </div>
+
 </div>
 
 <!-- All tasks -->
-   
-<div class="taskbox" id="taskbox" cdkDropList (cdkDropListDropped)="onDrop($event, 0, 1)" [cdkDropListData]="dataSource">
-    <div *ngFor="let data of dataSource" cdkDragBoundary="#taskbox" cdkDrag [ngClass]="data.status == 2 ? 'task-completed' : data.status == 3 ? 'task-renew' : ''">
+<div class="taskbox" id="taskbox" cdkDropList (cdkDropListDropped)="onDrop($event, 0, 1)" [cdkDropListData]="filteredTasks">
+    <div *ngFor="let data of filteredTasks" cdkDragBoundary="#taskbox" cdkDrag [ngClass]="data.status == 2 ? 'task-completed' : data.status == 3 ? 'task-renew' : ''">
 
         <!-- Preview -->
         <div class="preview" *cdkDragPreview>
@@ -216,7 +215,7 @@
         <span>Completed</span>
     </div>
     <hr>
-    <div *ngFor="let project of projects">
+    <div *ngFor="let project of projects" >
         <div class="submenu" (click)="filterData($event)" id="{{ project.project }}" *ngIf="project.project != 'Inbox'">
             <i class="fal fa-layer-group fa-lg"></i>
             <span>{{ project.project }}</span>

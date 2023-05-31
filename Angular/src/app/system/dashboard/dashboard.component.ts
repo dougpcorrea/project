@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { DataService } from 'src/app/dashboard/dashboard.service';
+import { DataService } from 'src/app/system/dashboard/dashboard.service';
 import * as moment from 'moment';
 import { DomSanitizer } from '@angular/platform-browser';
 
