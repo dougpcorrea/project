@@ -1,7 +1,8 @@
 import { DIALOG_DATA } from '@angular/cdk/dialog';
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit, ViewChild, } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-edit-card',
@@ -99,7 +100,7 @@ export class EditCardComponent {
             filetype_three: filetype_three,
         };
 
-        return this.http.put('http://localhost:8000/api/cards/', payload).subscribe(res => {
+        return this.http.put(`${environment.apiUrl}cards/`, payload).subscribe(res => {
             if (res === 'URL_INVALIDO') {
                 this.erro = true;
                 this.error = 'The provided URL is invalid'

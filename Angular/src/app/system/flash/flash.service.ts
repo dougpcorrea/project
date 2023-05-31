@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -11,11 +12,11 @@ export class DataService {
   constructor(private httpClient: HttpClient) { }
 
   get_cards() {
-    return this.httpClient.get<any>('http://localhost:8000/api/cards')
+    return this.httpClient.get<any>(`${environment.apiUrl}cards`)
   }
 
   getDecks() {
-    return this.httpClient.get<any>('http://localhost:8000/api/decks')
+    return this.httpClient.get<any>(`${environment.apiUrl}decks`)
   }
 
 }

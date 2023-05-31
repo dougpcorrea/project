@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +11,11 @@ export class DataService {
   constructor(private httpClient: HttpClient) { }
 
   getProgress() {
-    return this.httpClient.get<any>('http://localhost:8000/api/habit/progress')
+    return this.httpClient.get<any>(`${environment.apiUrl}habit/progress`)
   }
 
   getHabits() {
-    return this.httpClient.get<any>('http://localhost:8000/api/habit')
+    return this.httpClient.get<any>(`${environment.apiUrl}habit`)
   }
 
   postProgress(habit: string, date: Date, completed: number) {
@@ -26,6 +27,6 @@ export class DataService {
     }
 
     const habitProgress: HabitProgress = { habit, date, completed };
-    return this.httpClient.put('http://localhost:8000/api/habit/update/', habitProgress).subscribe();
+    return this.httpClient.put(`${environment.apiUrl}habit/update/`, habitProgress).subscribe();
   }
 }
