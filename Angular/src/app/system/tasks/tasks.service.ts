@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { BehaviorSubject, tap } from 'rxjs';
 
 
 @Injectable({
@@ -11,8 +12,17 @@ export class DataService {
 
   constructor(private httpClient: HttpClient) { }
 
+  private tasksSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+
   getTasks() {
-    return this.httpClient.get<any>(`${environment.apiUrl}task`)
+    const cachedTasks = this.tasksSubject.getValue();
+    if (cachedTasks.length > 0) {
+      return this.tasksSubject.asObservable();
+    } else {
+      return this.httpClient.get<any[]>(`${environment.apiUrl}task`).pipe(
+        tap((tasks) => this.tasksSubject.next(tasks))
+      );
+    }
   }
 
   addTask(id: number, task: string, date: any, priority: any, project: any,  ordering: number, status: number, subtask: number, repeat: number){

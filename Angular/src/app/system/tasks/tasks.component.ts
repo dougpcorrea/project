@@ -99,20 +99,17 @@ export class TasksComponent implements OnInit {
     completedTasks: number = 0;
 
     ngOnInit() {
-        if (this.tasks.length === 0){
-            this.dataService.getTasks().subscribe((res: any[]) => {
-                res.forEach((task: any) => {
-                    if (task.date === null) {
-                        task.date = 'No date selected';
-                    }
-                });
-                this.tasks = res;
-                this.filteredTasks = res.filter((task: any) => task.status === 0 && task.date <= this.today && task.subtask === 0).sort((a: any, b: any) => a.ordering - b.ordering);
-                this.subtasks = res.filter((task: any) => task.subtask !== 0).sort((a: any, b: any) => a.ordering - b.ordering);
-                this.show = true;
+        this.dataService.getTasks().subscribe((res: any[]) => {
+            res.forEach((task: any) => {
+                if (task.date === null) {
+                    task.date = 'No date selected';
+                }
             });
-        }
-
+            this.tasks = res;
+            this.filteredTasks = res.filter((task: any) => task.status === 0 && task.date <= this.today && task.subtask === 0).sort((a: any, b: any) => a.ordering - b.ordering);
+            this.subtasks = res.filter((task: any) => task.subtask !== 0).sort((a: any, b: any) => a.ordering - b.ordering);
+            this.show = true;
+        });
         this.dataService.getKarma().subscribe(res => {
             let filteredData = res.filter((item: { date: string; }) => item.date === this.today);
             if (filteredData.length > 0) {
