@@ -2,7 +2,9 @@
 
 Reach your full potential performing with excellence.
 
-A centralized personal development hub leveraging the power of smart algorithms and AI to  empower individuals to unlock their full potential and help them stay organized and achieve their goals effectively.
+A centralized personal development hub leveraging the power of smart algorithms and AI to empower individuals to unlock their full potential and help them stay organized and achieve their goals effectively.
+
+[Available here](https://lifeplanner.vercel.app/)
 
 Feel free to join me on this exciting journey.
 
