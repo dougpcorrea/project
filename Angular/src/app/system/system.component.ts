@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { DataService } from './system.service';
 
 interface SideNavToggle {
     screenWidth: number;
@@ -11,6 +12,9 @@ interface SideNavToggle {
   styleUrls: ['./system.component.scss']
 })
 export class SystemComponent{
+
+    constructor() {}
+    
     title = 'Projects';
 
     isSideNavCollapsed = false;

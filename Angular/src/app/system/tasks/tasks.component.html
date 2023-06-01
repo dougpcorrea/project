@@ -1,14 +1,12 @@
 <!-- Title -->
-<div class="title">
-
-        <h1>{{ title }}</h1>
-        <i [ngClass]="completedTasks < 3 ? 'fal fa-circle fa-2x' : 'fas fa-check-circle fa-2x high'"></i>
-        <h2>{{ completedTasks }}/3</h2>
-
+<div class="title" *ngIf="show">
+    <h1>{{ title }}</h1>
+    <i [ngClass]="completedTasks < 3 ? 'fal fa-circle fa-2x' : 'fas fa-check-circle fa-2x high'"></i>
+    <h2>{{ completedTasks }}/3</h2>
 </div>
 
 <!-- All tasks -->
-<div class="taskbox" id="taskbox" cdkDropList (cdkDropListDropped)="onDrop($event, 0, 1)" [cdkDropListData]="filteredTasks">
+<div *ngIf="show" class="taskbox" id="taskbox" cdkDropList (cdkDropListDropped)="onDrop($event, 0, 1)" [cdkDropListData]="filteredTasks">
     <div *ngFor="let data of filteredTasks" cdkDragBoundary="#taskbox" cdkDrag [ngClass]="data.status == 2 ? 'task-completed' : data.status == 3 ? 'task-renew' : ''">
 
         <!-- Preview -->
@@ -135,7 +133,7 @@
 </div>
 
 <!-- Add task -->
-<div class="add-task" [style.pointer-events]="isDisabled ? 'none' : 'auto'">
+<div *ngIf="show"class="add-task" [style.pointer-events]="isDisabled ? 'none' : 'auto'">
 
     <!-- Closed -->
     <div *ngIf="!inputStatus" (click)="inputTask()" class="add-task-closed">
