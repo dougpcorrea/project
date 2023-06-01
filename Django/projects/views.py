@@ -12,6 +12,10 @@ from .models import Book, Decks, Habit, HabitProgress, Karma, Task, Birthday, Se
 from .serializers import BookSerializer, DecksSerializer, HabitSerializer, HabitProgressSerializer, TaskSerializer, KarmaSerializer, BirthdaySerializer, SettingsSerializer, CardsSerializer
 
 class BookAPIView(APIView):
+
+    if os.environ.get('DJANGO_ENV') == 'prod':
+        http_method_names = ['get']
+
     def get(self, request):
         queryset = Book.objects.all()
         serializer = BookSerializer(queryset, many=True)
@@ -27,6 +31,10 @@ class BookAPIView(APIView):
 
 
 class HabitAPIView(APIView):
+
+    if os.environ.get('DJANGO_ENV') == 'prod':
+        http_method_names = ['get']
+
     def get(self, request):
         queryset = Habit.objects.all()
         serializer = HabitSerializer(queryset, many=True)
@@ -34,6 +42,10 @@ class HabitAPIView(APIView):
 
 
 class HabitProgressAPIView(APIView):
+
+    if os.environ.get('DJANGO_ENV') == 'prod':
+        http_method_names = ['get']
+
     def get(self, request):
         queryset = HabitProgress.objects.all()
         serializer = HabitProgressSerializer(queryset, many=True)
@@ -56,6 +68,10 @@ class HabitProgressAPIView(APIView):
 
 
 class TaskAPIView(APIView):
+
+    if os.environ.get('DJANGO_ENV') == 'prod':
+        http_method_names = ['get']
+
     def get(self, request):
         queryset = Task.objects.all()
         serializer = TaskSerializer(queryset, many=True)
@@ -94,6 +110,10 @@ class TaskAPIView(APIView):
 
 
 class KarmaAPIView(APIView):
+
+    if os.environ.get('DJANGO_ENV') == 'prod':
+        http_method_names = ['get']
+
     def get(self, request):
         queryset = Karma.objects.all()
         serializer = KarmaSerializer(queryset, many=True)
@@ -113,12 +133,20 @@ class KarmaAPIView(APIView):
         return Response(serializer.errors, status=400)
 
 class BirthdayAPIView(APIView):
+
+    if os.environ.get('DJANGO_ENV') == 'prod':
+        http_method_names = ['get']
+
     def get(self, request):
         queryset = Birthday.objects.all()
         serializer = BirthdaySerializer(queryset, many=True)
         return Response(serializer.data)
 
 class SettingsAPIView(APIView):
+
+    if os.environ.get('DJANGO_ENV') == 'prod':
+        http_method_names = ['get']
+
     def get(self, request):
         queryset = Settings.objects.all()
         serializer = SettingsSerializer(queryset, many=True)
@@ -136,6 +164,10 @@ class SettingsAPIView(APIView):
         return Response(serializer.errors, status=400)
 
 class CardsAPIView(APIView):
+
+    if os.environ.get('DJANGO_ENV') == 'prod':
+        http_method_names = ['get']
+
     def get(self, request):
         queryset = Cards.objects.all()
         serializer = CardsSerializer(queryset, many=True)
@@ -211,6 +243,10 @@ class CardsAPIView(APIView):
 
 
 class DecksAPIView(APIView):
+
+    if os.environ.get('DJANGO_ENV') == 'prod':
+        http_method_names = ['get']
+        
     def get(self, request):
         queryset = Decks.objects.all()
         serializer = DecksSerializer(queryset, many=True)

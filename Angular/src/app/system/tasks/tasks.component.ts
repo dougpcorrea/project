@@ -418,8 +418,10 @@ export class TasksComponent implements OnInit {
 
             if (type === 1) {
                 const i = this.tasks.findIndex(function (x) { return x.id == element.target.id })
+                const j = this.filteredTasks.findIndex(function (x) { return x.id == element.target.id })
                 this.tasks[i].status = 2;
-                setTimeout(() => { this.tasks.splice(i, 1) }, 250);
+                this.filteredTasks[j].status = 2;
+                setTimeout(() => { this.tasks.splice(i, 1), this.filteredTasks.splice(j, 1) }, 250);
                 this.dataService.deleteTask(element.target.id)
             } else {
                 const i = this.subtasks.findIndex(function (x) { return x.id == element.target.id })
@@ -435,32 +437,38 @@ export class TasksComponent implements OnInit {
     completeTask(parent_id: number, id: number, status: number, type: number, repeat: number) {
 
         if (status === 0 && type === 1){
-            const index = this.tasks.findIndex(function (x) { return x.id == id })
+            const i = this.tasks.findIndex(function (x) { return x.id == id })
+            const j = this.filteredTasks.findIndex(function (x) { return x.id == id })
                            
             this.completedTasks = this.completedTasks + 1
             this.dataService.updateKarma(this.today, this.completedTasks)
 
-            if (this.tasks[index].repeat === 1){
+            if (this.tasks[i].repeat === 1){
                 let hoje = new Date();
                 let competency = new Date(hoje.setDate(hoje.getDate() + 1)).toISOString().split('T')[0];
                 this.dataService.updateTaskDate(id, competency)
                 
-                this.tasks[index].status = 3;
-                this.tasks[index].date = competency
-                setTimeout(() => { this.tasks[index].status = 0; }, 250);
+                this.tasks[i].status = 3;
+                this.tasks[i].date = competency
+                this.filteredTasks[j].status = 3;
+                this.filteredTasks[j].date = competency
+                setTimeout(() => { this.filteredTasks[j].status = 0 }, 250);
                 
             } else {
-                this.tasks[index].status = 2;
+                this.tasks[i].status = 2;
+                this.filteredTasks[j].status = 2;
                 this.dataService.updateTaskStatus(id, 1)
-                setTimeout(() => { this.tasks.splice(index, 1) }, 250);
+                setTimeout(() => { this.filteredTasks.splice(j, 1) }, 250);
             }
 
         } else if (status === 1 && type === 1 ) {
 
             if (confirm('Are you sure?')) {
-                const index = this.tasks.findIndex(function (x) { return x.id == id })
-                this.tasks[index].status = 2;
-                setTimeout(() => { this.tasks.splice(index, 1) }, 250);
+                const i = this.tasks.findIndex(function (x) { return x.id == id })
+                const j = this.filteredTasks.findIndex(function (x) { return x.id == id })
+                this.tasks[i].status = 2;
+                this.filteredTasks[j].status = 2;
+                setTimeout(() => { this.filteredTasks[j].status = 2; }, 250);
                 this.dataService.updateTaskStatus(id, 0)
 
                 this.subtasks.filter((task: any) => task.subtask === id).forEach((data) => {
@@ -473,8 +481,8 @@ export class TasksComponent implements OnInit {
             }
         } else if (status === 1 && type === 2){
 
-            const index = this.tasks.findIndex(function (x) { return x.id == parent_id })
-            if (this.tasks[index].status === 0){
+            const i = this.tasks.findIndex(function (x) { return x.id == parent_id })
+            if (this.tasks[i].status === 0){
                 const filteredSubtasksIndex = this.filteredSubtasks.findIndex(function (x) { return x.id == id })
                 const subtasksIndex = this.subtasks.findIndex(function (x) { return x.id == id })
                 this.filteredSubtasks[filteredSubtasksIndex].status = 0;
@@ -484,14 +492,17 @@ export class TasksComponent implements OnInit {
                 if (confirm('Are you sure?')) {
                     const filteredSubtasksIndex = this.filteredSubtasks.findIndex(function (x) { return x.id == id })
                     const subtasksIndex = this.subtasks.findIndex(function (x) { return x.id == id })
-                    const index = this.tasks.findIndex(function (x) { return x.id == parent_id})
-                    this.tasks[index].status = 0;
+                    const i = this.tasks.findIndex(function (x) { return x.id == parent_id})
+                    const j = this.filteredTasks.findIndex(function (x) { return x.id == parent_id})
+                    this.tasks[i].status = 0;
+                    this.filteredTasks[j].status = 0;
                     this.filteredSubtasks[filteredSubtasksIndex].status = 0;
                     this.subtasks[subtasksIndex].status = 0;
                     this.dataService.updateTaskStatus(id, 0)
                     this.dataService.updateTaskStatus(parent_id, 0)
-                    this.tasks[index].status = 2;
-                    setTimeout(() => { this.tasks.splice(index, 1) }, 250);
+                    this.tasks[i].status = 2;
+                    this.filteredTasks[j].status = 2;
+                    setTimeout(() => { this.filteredTasks.splice(j, 1) }, 250);
                 }
             }
         } else if (status === 0 && type === 2){
@@ -505,9 +516,11 @@ export class TasksComponent implements OnInit {
             let complete = this.subtasks.filter((task: any) => task.subtask === parent_id && task.status === 1).length;
 
             if (total - complete === 0){
-                const index = this.tasks.findIndex(function (x) { return x.id == parent_id })
-                this.tasks[index].status = 2;
-                setTimeout(() => { this.tasks.splice(index, 1) }, 250);
+                const i = this.tasks.findIndex(function (x) { return x.id == parent_id })
+                const j = this.filteredTasks.findIndex(function (x) { return x.id == parent_id })
+                this.tasks[i].status = 2;
+                this.filteredTasks[j].status = 2;
+                setTimeout(() => { this.filteredTasks.splice(j, 1) }, 250);
                 this.dataService.updateTaskStatus(parent_id, 1)
 
                 this.completedTasks = this.completedTasks + 1
@@ -568,8 +581,10 @@ export class TasksComponent implements OnInit {
             newPriority = 3
         }
 
-        const index = this.tasks.findIndex(function (x) { return x.id == id })
-        this.tasks[index].priority = newPriority
+        const i_all = this.tasks.findIndex(function (x) { return x.id == id })
+        const i_filter= this.filteredTasks.findIndex(function (x) { return x.id == id })
+        this.tasks[i_all].priority = newPriority
+        this.filteredTasks[i_filter].priority = newPriority
         this.dataService.updateTaskPriority(id, newPriority)
     }
 
@@ -633,7 +648,9 @@ export class TasksComponent implements OnInit {
 
         this.dataService.updateRepeat(id, newRepeat)
         let i = this.tasks.findIndex(function (x) { return x.id == id})
+        let j = this.filteredTasks.findIndex(function (x) { return x.id == id})
         this.tasks[i].repeat = newRepeat
+        this.filteredTasks[j].repeat = newRepeat
 
         return true
     }

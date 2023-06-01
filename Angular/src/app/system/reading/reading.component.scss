@@ -44,7 +44,7 @@
     i{
         cursor: pointer;
         user-select: none;
-        background-color: #fcb62b;
+        background-color: var(--primary-color);
         background-clip: text;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -72,7 +72,7 @@
             height: inherit;
             width: 0%;
             border-radius: inherit;
-            background: #fcb62b;
+            background: var(--primary-color);
             position: relative;
         }
 
