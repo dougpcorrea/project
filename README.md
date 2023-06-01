@@ -27,3 +27,6 @@ Feel free to join me on this exciting journey.
 * 🟡🔒 **[JWT Authentication]()** 
 
 ## ▶️ Development
+
+[19/05/2023] - Project starts
+[01/06/2023] - Deploy
