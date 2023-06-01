@@ -100,7 +100,7 @@ export class TasksComponent implements OnInit {
     completedTasks: number = 0;
 
     ngOnInit() {
-        if (!environment.production) {
+        if (environment.production) {
             this.title = 'Inbox'
         }
         this.dataService.getTasks().subscribe((res: any[]) => {
