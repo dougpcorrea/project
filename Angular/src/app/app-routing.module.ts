@@ -12,6 +12,10 @@ const routes: Routes = [
         component: HomeComponent,
     },
     {
+        path: 'dashboard',
+        component: HomeComponent,
+    },
+    {
         path: '',
         component: SystemComponent,
         children: [

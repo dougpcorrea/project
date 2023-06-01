@@ -18,11 +18,10 @@ export class HabitsComponent implements OnInit {
     dataSource: any
     habits: any[] = [];
     displayedDates: string[] = [];
-
+    show = false;
 
 
     ngOnInit() {
-        const today = new Date();
         const endDate = new Date(); // Set the end date as today
         const startDate = new Date();
         startDate.setDate(endDate.getDate() - 29); // Subtract 30 days from the end date
@@ -44,11 +43,15 @@ export class HabitsComponent implements OnInit {
       
         this.dataService.getHabits().subscribe(res => {
           this.habits = res;
+
+          this.dataService.getProgress().subscribe(res => {
+            this.dataSource = res;
+            this.show = true;
+          });
+          
         });
       
-        this.dataService.getProgress().subscribe(res => {
-          this.dataSource = res;
-        });
+
       }
 
 

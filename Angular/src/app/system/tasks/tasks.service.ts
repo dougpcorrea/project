@@ -12,15 +12,15 @@ export class DataService {
 
   constructor(private httpClient: HttpClient) { }
 
-  private tasksSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  private getTasksSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
 
   getTasks() {
-    const cachedTasks = this.tasksSubject.getValue();
+    const cachedTasks = this.getTasksSubject.getValue();
     if (cachedTasks.length > 0) {
-      return this.tasksSubject.asObservable();
+      return this.getTasksSubject.asObservable();
     } else {
       return this.httpClient.get<any[]>(`${environment.apiUrl}task`).pipe(
-        tap((tasks) => this.tasksSubject.next(tasks))
+        tap((tasks) => this.getTasksSubject.next(tasks))
       );
     }
   }

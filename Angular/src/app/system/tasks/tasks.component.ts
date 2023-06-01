@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatSelect } from '@angular/material/select';
 import { DataService } from './tasks.service';
 import { FormControl } from '@angular/forms';
@@ -118,7 +118,6 @@ export class TasksComponent implements OnInit {
                 this.completedTasks = 0;
             }
         });
-
     }
 
     subtaskCounter(id: number) {
