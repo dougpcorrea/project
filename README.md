@@ -12,16 +12,16 @@ Feel free to join me on this exciting journey.
 
 #### Main features
 
-* 🟢📝 **[To-Do List](https://github.com/dougpcorrea/software_engineering/tree/main/1.%20Smart%20to%20do%20list)** 
-* 🟢🎧 **[Audiobook Player](https://github.com/dougpcorrea/software_engineering/tree/main/1.%20Smart%20to%20do%20list)** 
-* 🟡🎓 **[Flash Cards](https://github.com/dougpcorrea/software_engineering/tree/main/1.%20Smart%20to%20do%20list)** 
-* 🟡📈 **[Habit Tracker](https://github.com/dougpcorrea/software_engineering/tree/main/1.%20Smart%20to%20do%20list)** 
-* 🔴🔗 **[Networking Management](https://github.com/dougpcorrea/software_engineering/tree/main/1.%20Smart%20to%20do%20list)** 
-* 🔴📅 **[Calendar](https://github.com/dougpcorrea/software_engineering/tree/main/1.%20Smart%20to%20do%20list)** 
-* 🔴📚 **[Virtual Bookshelf](https://github.com/dougpcorrea/software_engineering/tree/main/1.%20Smart%20to%20do%20list)** 
+* 🟢📝 **[To-Do List](https://github.com/dougpcorrea/project/tree/main/Angular/src/app/system/tasks)** 
+* 🟢🎧 **[Audiobook Player](https://github.com/dougpcorrea/project/tree/main/Angular/src/app/system/reading)** 
+* 🟡🎓 **[Flash Cards](https://github.com/dougpcorrea/project/tree/main/Angular/src/app/system/flash)** 
+* 🟡📈 **[Habit Tracker](https://github.com/dougpcorrea/project/tree/main/Angular/src/app/system/habits)** 
+* 🔴🔗 **[Networking Management]()** 
+* 🔴📅 **[Calendar]()** 
+* 🔴📚 **[Virtual Bookshelf]()** 
 
 #### Other features
 
-* 🟡🔒 **[JWT Authentication](https://github.com/dougpcorrea/software_engineering/tree/main/1.%20Smart%20to%20do%20list)** 
+* 🟡🔒 **[JWT Authentication]()** 
 
 ## ▶️ Development
