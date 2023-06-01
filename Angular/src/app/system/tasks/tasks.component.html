@@ -1,3 +1,8 @@
+<!-- Loader -->
+<div *ngIf="!show" class="load">
+    <div class="loader"></div>
+</div>
+
 <!-- Title -->
 <div class="title" *ngIf="show">
     <h1>{{ title }}</h1>
@@ -192,29 +197,29 @@
         </div>
     </div>
     <hr>
-    <div class="submenu" (click)="filterData($event)" id="Inbox">
+    <div class="submenu" (click)="filterData('Inbox')" id="Inbox">
         <i class="fal fa-inbox-in fa-lg"></i>   
         <span>Inbox</span>
     </div>
-    <div class="submenu selected" (click)="filterData($event)" id="Today">
+    <div class="submenu" (click)="filterData('Today')" id="Today">
         <i class="fal fa-calendar-day fa-lg"></i>
         <span>Today</span>
     </div>
-    <div class="submenu" (click)="filterData($event)" id="This week">
+    <div class="submenu" (click)="filterData('This week')" id="This week">
         <i class="fal fa-calendar-week fa-lg"></i>
         <span>This week</span>
     </div>
-    <div class="submenu" (click)="filterData($event)" id="Overdue">
+    <div class="submenu" (click)="filterData('Overdue')" id="Overdue">
         <i class="fal fa-calendar-exclamation fa-lg"></i>
         <span>Overdue</span>
     </div>
-    <div class="submenu" (click)="filterData($event)" id="Completed">
+    <div class="submenu" (click)="filterData('Completed')" id="Completed">
         <i class="fal fa-check-square fa-lg"></i>
         <span>Completed</span>
     </div>
     <hr>
     <div *ngFor="let project of projects" >
-        <div class="submenu" (click)="filterData($event)" id="{{ project.project }}" *ngIf="project.project != 'Inbox'">
+        <div class="submenu" (click)="filterData(project.project)" *ngIf="project.project != 'Inbox'" id="{{ project.project }}">
             <i class="fal fa-layer-group fa-lg"></i>
             <span>{{ project.project }}</span>
         </div>

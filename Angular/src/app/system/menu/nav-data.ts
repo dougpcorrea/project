@@ -1,6 +1,13 @@
+import { environment } from "src/environments/environment";
+
+let homeRoute = 'dashboard'
+if (environment.production){
+    homeRoute = ''
+}
+
 export const navbarData = [
     {
-        routeLink: 'dashboard',
+        routeLink: homeRoute,
         icon: 'fal fa-home',
         label: 'Dashboard'
     },

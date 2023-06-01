@@ -30,19 +30,31 @@
 }
 
 .menu{
-    display: flex;
-    flex-direction: column;
-    padding: 2rem 0 0 0;
+    display: block;
+    padding: 2rem 0 5rem 0;
     background: var(--primary-color);
     right: 0;
-    position: fixed;
-    row-gap: 0.3rem;
+
     top: 0;
     width: 15rem;
     box-shadow: 0.05vw 0 1.05vw 0 #8690a3;
     color: white;
     z-index: 3;
     animation: slide 0.5s;
+    overflow: auto;
+
+    hr {
+        display: block;
+        border: 0;
+        height: 0.05rem;
+        background: white;
+        margin: 0.65rem 0.75rem;
+    }
+
+    .selected{
+        background-color: white;
+        color: #494949;
+    }
 
     .submenu:hover{
         background-color: white;
@@ -50,12 +62,13 @@
     }
     .submenu{
         height: 2.5rem;
+        padding: 1rem 0.5rem 1rem 0.5rem;
         display: flex;
         position: relative;
         justify-content: center;
         align-items: center;
         column-gap: 10%;
-        margin: 0 0.75rem 0 0.75rem;
+        margin: 0.3rem 0.75rem 0 0.75rem;
         padding-left: 0.5rem;
         border-radius: 0.3rem;
         cursor: pointer;
@@ -78,7 +91,7 @@
     .search{
         display: flex;
         justify-content: center;
-        margin-bottom: 1.1vw;
+        margin-bottom: 2rem;
 
         div{
             display: flex;
@@ -108,17 +121,7 @@
         
     }
     
-    hr {
-        border: 0;
-        height: 0.05rem;
-        background: white;
-        margin: 0.65rem 0.75rem;
-    }
 
-    .selected{
-        background-color: white;
-        color: #494949;
-    }
 }   
 
 .add-task{
@@ -589,4 +592,5 @@
 ::ng-deep .mat-calendar-body-selected  {
     background-color: var(--primary-color);
 }
+
 

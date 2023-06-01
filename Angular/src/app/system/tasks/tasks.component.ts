@@ -9,6 +9,7 @@ import { DOCUMENT } from '@angular/common';
 import { MatDatepicker } from '@angular/material/datepicker';
 import * as moment from 'moment';
 import { parseTemplate } from '@angular/compiler';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-tasks',
@@ -99,6 +100,9 @@ export class TasksComponent implements OnInit {
     completedTasks: number = 0;
 
     ngOnInit() {
+        if (!environment.production) {
+            this.title = 'Inbox'
+        }
         this.dataService.getTasks().subscribe((res: any[]) => {
             res.forEach((task: any) => {
                 if (task.date === null) {
@@ -106,7 +110,7 @@ export class TasksComponent implements OnInit {
                 }
             });
             this.tasks = res;
-            this.filteredTasks = res.filter((task: any) => task.status === 0 && task.date <= this.today && task.subtask === 0).sort((a: any, b: any) => a.ordering - b.ordering);
+            this.filterData(this.title)
             this.subtasks = res.filter((task: any) => task.subtask !== 0).sort((a: any, b: any) => a.ordering - b.ordering);
             this.show = true;
         });
@@ -174,14 +178,13 @@ export class TasksComponent implements OnInit {
         }
     }
 
-    filterData(element: any) {
-        const id = element.currentTarget.id
+    filterData(id: string) {
         this.title = id
 
         this.isDisabled = false;
 
         this.document.querySelectorAll('.selected').forEach(element => { element.classList.remove('selected'); });
-        element.target.classList.add('selected')
+        this.document.querySelector(`#${id}`)?.classList.add('selected')
 
             if (id === 'Today') {
                 this.filteredTasks = this.tasks.filter((task: any) =>
