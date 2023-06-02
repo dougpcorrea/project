@@ -12,20 +12,21 @@
 
 <!-- All tasks -->
 <div *ngIf="show" class="taskbox" id="taskbox" cdkDropList (cdkDropListDropped)="onDrop($event, 0, 1)" [cdkDropListData]="filteredTasks">
+    
     <div *ngFor="let data of filteredTasks" cdkDragBoundary="#taskbox" cdkDrag [ngClass]="data.status == 2 ? 'task-completed' : data.status == 3 ? 'task-renew' : ''">
 
-        <!-- Preview -->
-        <div class="preview" *cdkDragPreview>
-            <div class="preview-handle" cdkDragHandle>
-                <i class="fal fa-grip-lines fa-2x"></i>
-            </div>
-            <div class="preview-item fa-stack">
-                <i [ngClass]="data.status == 0 ? '' : 'hidden'" class="fas fa-circle fa-stack-2x lightred"></i>
-                <i [ngClass]="data.status == 0 ? '' : 'hidden'" class="fal fa-circle fa-stack-2x"></i>
-                <i [ngClass]="data.status == 0 ? '' : 'visible'" class="fal fa-check-circle fa-stack-2x"></i>
-            </div>
-            <div class="preview-name" contenteditable #taskName (keydown.enter)="taskName.blur()" (keydown.enter)="makeTaskEditable($event, data.id, 1)"> {{ data.task }} </div>
+    <!-- Preview -->
+    <div class="preview" *cdkDragPreview>
+        <div class="preview-handle" cdkDragHandle>
+            <i class="fal fa-grip-lines fa-2x"></i>
         </div>
+        <div class="preview-item fa-stack">
+            <i [ngClass]="data.status == 0 ? '' : 'hidden'" class="fas fa-circle fa-stack-2x lightred"></i>
+            <i [ngClass]="data.status == 0 ? '' : 'hidden'" class="fal fa-circle fa-stack-2x"></i>
+            <i [ngClass]="data.status == 0 ? '' : 'visible'" class="fal fa-check-circle fa-stack-2x"></i>
+        </div>
+        <div class="preview-name" contenteditable #taskName (keydown.enter)="taskName.blur()" (keydown.enter)="makeTaskEditable($event, data.id, 1)"> {{ data.task }} </div>
+    </div>
         
         <!-- Task -->
         <div class="task" id="task{{ data.id }}" >
