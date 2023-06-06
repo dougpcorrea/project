@@ -12,4 +12,9 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  shaw = true
+  shew(){
+    this.shaw = !this.shaw
+  }
+
 }

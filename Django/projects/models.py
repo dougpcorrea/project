@@ -7,6 +7,7 @@ class Book(models.Model):
     filename = models.CharField(max_length=360)
     duration = models.DecimalField(max_digits=20, decimal_places=6)
     cover = models.CharField(max_length=360)
+    rate = models.SmallIntegerField(default=0)
 
     def __str__(self):
         return self.title
@@ -110,3 +111,20 @@ class Decks(models.Model):
 
     class Meta:
         db_table = 'hs_decks'
+
+class Catalogue(models.Model):
+    id = models.AutoField(primary_key=True)
+    code = models.BigIntegerField()
+    isbn = models.CharField(max_length=15)
+    title = models.CharField(max_length=255)
+    author = models.CharField(max_length=255)
+    url = models.CharField(max_length=350)
+    category = models.CharField(max_length=150, blank=True, null=True)
+    year = models.CharField(max_length=150)
+    publisher = models.CharField(max_length=150)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        db_table = 'hs_catalogue'

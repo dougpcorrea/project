@@ -102,8 +102,8 @@ export class FlashComponent implements OnInit {
         }, 2000);
     }
 
-    editCard() {
-
+    editCard(type: number) {
+        console.log(1)
         const dialogConfig = new MatDialogConfig()
         dialogConfig.disableClose = true
 
@@ -113,6 +113,7 @@ export class FlashComponent implements OnInit {
             { back_one: this.allCards[this.index].back_one },
             { back_two: this.allCards[this.index].back_two },
             { back_three: this.allCards[this.index].back_three },
+            { type: type }
         ]
 
         dialogConfig.data = data;
@@ -120,7 +121,7 @@ export class FlashComponent implements OnInit {
         this.dialogRef = this.dialog.open(EditCardComponent, dialogConfig)
 
         this.dialogRef.afterClosed().subscribe((data) => {
-            if (data) {
+            if (data && data.type === 0) {
                 this.back_one = data.back_one
                 this.back_two = data.back_two
                 this.back_three = data.back_three

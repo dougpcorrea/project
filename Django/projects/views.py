@@ -8,8 +8,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import CreateAPIView
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
-from .models import Book, Decks, Habit, HabitProgress, Karma, Task, Birthday, Settings, Cards
-from .serializers import BookSerializer, DecksSerializer, HabitSerializer, HabitProgressSerializer, TaskSerializer, KarmaSerializer, BirthdaySerializer, SettingsSerializer, CardsSerializer
+from .models import Book, Decks, Habit, HabitProgress, Karma, Task, Birthday, Settings, Cards, Catalogue
+from .serializers import BookSerializer, DecksSerializer, HabitSerializer, HabitProgressSerializer, TaskSerializer, KarmaSerializer, BirthdaySerializer, SettingsSerializer, CardsSerializer, CatalogueSerializer
 
 class BookAPIView(APIView):
 
@@ -174,6 +174,29 @@ class CardsAPIView(APIView):
         print(os.environ.get('DJANGO_ENV'))
         return Response(serializer.data)
 
+    def post(self, request):
+        data = request.data
+        serializer = CardsSerializer(data=data)
+
+        data['deck'] = 'English'
+        data['date'] = '2023-05-04'
+        data['times'] = 0
+
+        if data['url_one']:
+            file_type = data['filetype_one']
+            filename = str(random.randint(100000000, 999999999)) + '.' + file_type
+            back_one = '<img>' + filename            
+            new_filepath = os.path.abspath(os.path.join(os.getcwd(), '..', '..', '..', 'Project', 'Angular', 'src', 'assets', 'cards', filename))
+            if download_image(data['url_one'], filename, new_filepath):
+                data['back_one'] = back_one 
+            else:
+                return Response('URL_INVALIDO')
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+
 
     def put(self, request):
         data = request.data
@@ -250,6 +273,13 @@ class DecksAPIView(APIView):
     def get(self, request):
         queryset = Decks.objects.all()
         serializer = DecksSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+class CatalogueAPIView(APIView):
+        
+    def get(self, request):
+        queryset = Catalogue.objects.all()
+        serializer = CatalogueSerializer(queryset, many=True)
         return Response(serializer.data)
 
 

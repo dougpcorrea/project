@@ -15,6 +15,7 @@
     --high-font-weight: bold;
     --card-height: 2.5vw;
     --border: 1px solid #dbdee1;
+    --vw: 1vw;
     // transform: scale(0.65);
 }
 
@@ -23,20 +24,7 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-button {
-    align-items: center;
-    padding: 1vh 0px;
-    border: none;
-    border-radius: 0.4rem;
-    color: var(--secondary-color);
-    background: var(--primary-color);
-    cursor: pointer;
-    font-family: 'Roboto';
-    overflow: hidden;
-    box-shadow: 0 .125rem .25rem #e6edef;
-}
-
-.menu{
+.amenu{
     display: flex;
     flex-direction: column;
     padding: 2.1vw 0 0 0;
@@ -125,36 +113,40 @@ button {
         background: white;
         margin: 0.67vw 0.4vw;
     }
-}   
+}  
 
-// Scroll
-
-::-webkit-scrollbar{
+::-webkit-scrollbar {
     width: 20px;
     height: 20px;
     background-color: #f4f7fa;
-
 }
-::-webkit-scrollbar-thumb{
+
+::-webkit-scrollbar-thumb {
     background-color: #babac0;
+    background-color: var(--primary-color);
     border-radius: 16px;
     border: 5px solid #f4f7fa;
 }
-::-webkit-scrollbar-track {
-  background-color:#f4f7fa;
-  border-radius: .5rem;
 
+::-webkit-scrollbar-track {
+    background-color: #f4f7fa;
+    border-radius: 0.5rem;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #f4f4f4;
+    background-color: #f4f4f4;
 }
+
 ::-webkit-scrollbar-button {
-  display: none;
-  border-radius: .5rem;
+    display: none;
+    border-radius: 0.5rem;
 }
+
 ::-webkit-scrollbar-corner {
     background: #f4f7fa;
 }
+
+
 
 
 .primary-color {
@@ -168,8 +160,8 @@ button {
 
 .load {
     position: absolute;
-    top: 35vh;
-    right: 50vw;
+    top: 30vh;
+    right: calc(50vw - 5rem);
     
     .loader {
         border: 16px solid #f3f3f3;
@@ -183,7 +175,7 @@ button {
 
 
   
-  @keyframes spin {
+@keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }

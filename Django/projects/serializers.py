@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Book, Decks, Habit, HabitProgress, Task, Karma, Birthday, Settings, Cards
+from .models import Book, Decks, Habit, HabitProgress, Task, Karma, Birthday, Settings, Cards, Catalogue
 
 class BookSerializer(serializers.ModelSerializer):
     class Meta:
@@ -44,4 +44,9 @@ class CardsSerializer(serializers.ModelSerializer):
 class DecksSerializer(serializers.ModelSerializer):
     class Meta:
         model = Decks
+        fields = '__all__'
+
+class CatalogueSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Catalogue
         fields = '__all__'

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import BookAPIView, DecksAPIView, HabitProgressAPIView, HabitAPIView, TaskAPIView, KarmaAPIView, BirthdayAPIView, SettingsAPIView, CardsAPIView
+from .views import BookAPIView, DecksAPIView, HabitProgressAPIView, HabitAPIView, TaskAPIView, KarmaAPIView, BirthdayAPIView, SettingsAPIView, CardsAPIView, CatalogueAPIView
 
 urlpatterns = [
     path('book/', BookAPIView.as_view(), name='book'),
@@ -14,5 +14,6 @@ urlpatterns = [
     path('settings/', SettingsAPIView.as_view(), name='settings'),
     path('cards/', CardsAPIView.as_view(), name='cards'),
     path('decks/', DecksAPIView.as_view(), name='decks'),
+    path('catalogue/', CatalogueAPIView.as_view(), name='catalogue'),
 
 ]

@@ -3,16 +3,10 @@
     <div class="loader"></div>
 </div>
 
-<!-- Title -->
-<div class="title" *ngIf="show">
-    <h1>{{ title }}</h1>
-    <i [ngClass]="completedTasks < 3 ? 'fal fa-circle fa-2x' : 'fas fa-check-circle fa-2x high'"></i>
-    <h2>{{ completedTasks }}/3</h2>
-</div>
+<div class="container">
+    <!-- All tasks -->
+    <div *ngIf="show" class="taskbox" id="taskbox" cdkDropList (cdkDropListDropped)="onDrop($event, 0, 1)" [cdkDropListData]="filteredTasks">
 
-<!-- All tasks -->
-<div *ngIf="show" class="taskbox" id="taskbox" cdkDropList (cdkDropListDropped)="onDrop($event, 0, 1)" [cdkDropListData]="filteredTasks">
-    
     <div *ngFor="let data of filteredTasks" cdkDragBoundary="#taskbox" cdkDrag [ngClass]="data.status == 2 ? 'task-completed' : data.status == 3 ? 'task-renew' : ''">
 
     <!-- Preview -->
@@ -136,24 +130,24 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
 
-<!-- Add task -->
-<div *ngIf="show"class="add-task" [style.pointer-events]="isDisabled ? 'none' : 'auto'">
+    <!-- Add task -->
+    <div *ngIf="show"class="add-task" [style.pointer-events]="isDisabled ? 'none' : 'auto'">
 
     <!-- Closed -->
     <div *ngIf="!inputStatus" (click)="inputTask()" class="add-task-closed">
         <i class="far fa-plus fa-2x"></i>
         <span class="add-task-closed-span">New task</span>
     </div>
-    
+
     <!--Oppened -->
     <div *ngIf="inputStatus" (click)="inputTask()" class="add-task-opened">
         <div class="addtask-left">
             <i class="fal fa-plus-circle fa-2x click" (click)="addTask()"></i>
             <div class="addtask-left-input" (keypress)="preventDefault($event)" *ngIf="inputStatus" (input)="onInputChange($event)" contenteditable="true" #taskInput></div>
         </div>
-    
+
         <div class="addtask-right">
             <div (click)="projectSelect.open()" class="addtask-date red">{{ project }}
                 <mat-select style="width: 0px;" #projectSelect>
@@ -186,10 +180,11 @@
 
     </div>    
 
+    </div>
 </div>
     
 <!-- Right menu -->
-<div class="menu">
+<!-- <div class="menu">
 
     <div class="search">
         <div>
@@ -226,7 +221,7 @@
         </div>
     </div>
 
-</div>
+</div> -->
 
 
 

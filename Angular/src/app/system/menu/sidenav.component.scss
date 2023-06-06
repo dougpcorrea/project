@@ -2,11 +2,10 @@
     background: var(--primary-color);
     transition: all .5s ease;
     position: fixed;
-    z-index: 1;
+    z-index: 3;
     top: 0;
     width: 5rem;
     height: 100vh;
-    box-shadow: 0.063rem 0 1.25rem 0 #8690a3;
 }
 
 .sidenav-collapsed {
@@ -75,4 +74,118 @@
 @keyframes slide_audiobooks {
     0% { bottom: -4.25rem; }
     100% { bottom: 0; }
+}
+
+.menu {
+    display: block;
+    position: absolute;
+    padding: 2rem 0 5rem 5rem;
+    background: #fff;
+    opacity: 1;
+    left: 0rem;
+    top: 0;
+    height: 100vh;
+    bottom: 15rem;
+    width: 20rem;
+    color: #494949;
+    z-index: 2 !important;
+    animation: slide 0.5s;
+    overflow: auto;
+    border-right: 1px solid #dbdee1;
+    box-shadow: 0 0.25rem 0.4rem #e6edef;
+
+    hr {
+        display: block;
+        border: 0;
+        height: 0.05rem;
+        background: #dbdee1;
+        margin: 0.65rem 0.75rem;
+    }
+
+    .selected {
+        background-color: #ebebeb;
+  
+    }
+
+    .submenu:hover {
+        background-color: #ebebeb;
+        color: #494949;
+    }
+
+    .submenu {
+        height: 2.5rem;
+        padding: 1rem 0.5rem 1rem 0.5rem;
+        display: flex;
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        column-gap: 6%;
+        margin: 0.3rem 0.75rem 0 0.75rem;
+        padding-left: 0.5rem;
+        border-radius: 0.3rem;
+        cursor: pointer;
+
+        span {
+            display: flex;
+            position: relative;
+            width: 70%;
+            font-size: 0.9rem;
+            pointer-events: none;
+        }
+
+        i {
+            font-size: 1.2rem;
+            pointer-events: none;
+
+        }
+
+    }
+
+    .search {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+
+        div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-right: 0.8rem;
+            border-radius: 0.25rem;
+            height: 2rem;
+            width: 75%;
+            background-color: #fff;
+            border: 1px solid #dbdee1;
+
+            input {
+                height: 90%;
+                width: 90%;
+                background-color: #fff;
+                border: 0;
+                color: #a9a9a9;
+                text-align: center;
+                font-size: 0.9rem;
+            }
+
+            input:focus{
+                outline: none;
+            }
+
+            input::placeholder{
+                color: #a9a9a9;
+            }
+
+            i {
+                font-size: 0.9rem;
+                color: #a9a9a9;
+            }
+        }
+
+    }
+}
+
+@media (max-width: 1600px) {
+    .menu{
+        display: none;
+    }
 }

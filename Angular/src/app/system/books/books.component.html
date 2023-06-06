@@ -1,0 +1,77 @@
+<div class="buttons">
+    <div class="filters">
+        <span><i class="fas fa-check"></i>Readed</span>
+        <span><i class="fas fa-ellipsis-h"></i>To read</span>
+        <span><i class="fas fa-headphones-alt"></i>Audiobook</span>
+    </div>
+    <div class="botoes">
+        <button><i class="far fa-plus fa-sm"></i>Add book</button>
+        <button><i class="far fa-search fa-sm"></i>Search book</button>
+    </div>
+</div>
+
+<div class="body">
+    <div class="container" *ngIf="!show">
+        <div class="selected">
+            <img class="cover" src="../../../assets/books/{{ selected }}">
+        </div>
+        <div class="livros">
+            <div class="livro" *ngFor="let book of books">
+                <div class="handler">
+                    <i class="fal fa-grip-lines fa-2x"></i>
+                </div>
+                <img (click)="select($event, book.cover)" src="../../../assets/books/{{ book.cover }}">
+                <div class="info">
+                    <span class="title">{{ book.title }}</span>
+                    <span>{{ book.autor }}</span>
+                </div>
+                <div class="items">
+                    <i (click)="b()" class="fas fa-info-circle fa-lg"></i>
+                    <i *ngIf="book.filename !== ''" class="fas fa-play-circle fa-lg"></i>
+                    <i class="fas fa-arrow-circle-up fa-lg"></i>
+                </div>
+                <div class="rate">
+                    <i [ngClass]="book.rate > 0 ? 'fas fa-star primary-color' : 'fal fa-star'"></i>
+                    <i [ngClass]="book.rate > 1 ? 'fas fa-star primary-color' : 'fal fa-star'"></i>
+                    <i [ngClass]="book.rate > 2 ? 'fas fa-star primary-color' : 'fal fa-star'"></i>
+                    <i [ngClass]="book.rate > 3 ? 'fas fa-star primary-color' : 'fal fa-star'"></i>
+                    <i [ngClass]="book.rate > 4 ? 'fas fa-star primary-color' : 'fal fa-star'"></i>
+                </div>
+            </div>
+    
+            <div class="livro" *ngFor="let book of books">
+                <div class="handler">
+                    <i class="fal fa-grip-lines fa-2x"></i>
+                </div>
+                <img (click)="select($event, book.cover)" src="../../../assets/books/{{ book.cover }}">
+                <div class="info">
+                    <span class="title">{{ book.title }}</span>
+                    <span>{{ book.autor }}</span>
+                </div>
+                <div class="items">
+                    <i (click)="b()" class="fas fa-info-circle fa-lg"></i>
+                    <i class="fas fa-play-circle fa-lg"></i>
+                    <i class="fas fa-arrow-circle-up fa-lg"></i>
+                </div>
+                <div class="rate">
+                    <i class="fal fa-star"></i>
+                    <i class="fal fa-star"></i>
+                    <i class="fal fa-star"></i>
+                    <i class="fal fa-star"></i>
+                    <i class="fal fa-star"></i>
+                </div>
+            </div>
+        </div>    
+    </div>
+</div>
+
+
+
+
+
+<div class="container" *ngIf="show">
+    <div class="book" *ngFor="let livro of allBooks">
+        <img src="{{ livro.url }}">
+    </div>
+</div>
+

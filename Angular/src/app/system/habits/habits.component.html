@@ -3,28 +3,72 @@
     <div class="loader"></div>
 </div>
 
-<!-- Container -->
-<div *ngIf="show" class="container">
+<div class="buttons">
+    <div class="botoes">
+        <button><i class="far fa-plus fa-sm"></i>Add habit</button>
+        <select #monthSelect (change)="changeMonth(monthSelect.value, 0)">
+            <option *ngFor="let month of months" [value]="month.number">{{ month.month }}</option>
+        </select>
+    </div>
+</div>
 
+  
+
+<div class="container">
     <div class="box">
-        
-        <table class="habits">
-            <tr>
-                <th colspan="100%">Habits tracker</th>
-            </tr>
-            <tr>
-                <th>
-                    <i class="fas fa-analytics fa-sm"></i>
-                    Habit</th>
-                <th *ngFor="let date of displayedDates">
-                    {{ date | date: 'dd'}}
-                    <br>
-                    
-                </th>
-            </tr>
-            <tr *ngFor="let habit of habits; let i = index" [ngClass]="i % 2 === 0 ? 'even' : 'odd'">
-                <td>{{ habit.habit }}</td>
-                <td *ngFor="let date of displayedDates" (click)="onClick($event)" class="click">
+        <div class="canvas">
+            <div class="icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <div class="info">
+                <span class="value">{{ completed }}</span>
+                <span class="subvalue">Complete</span>
+            </div>
+            <canvas id="complete"></canvas>
+        </div>
+        <div class="canvas" >
+            <div class="icon">
+                <i class="fas fa-percentage" style="padding-left: 3px; padding-right: 3px"></i>
+            </div>
+            <div class="info">
+                <span class="value">{{ average }}%</span>
+                <span class="subvalue">Average</span>
+            </div>
+            <canvas id="average"></canvas>
+        </div>
+        <div class="canvas">
+            <div class="icon">
+                <i class="fas fa-chart-line" ></i>
+            </div>
+            <div class="info">
+                <span class="value">69%</span>
+                <span class="subvalue">Best streak</span>
+            </div>
+            <canvas id="Astolf"></canvas>
+        </div>
+        <div class="canvas">
+            <div class="icon">
+                <i class="fas fa-check-double" ></i>
+            </div>
+            <div class="info">
+                <span class="value">74%</span>
+                <span class="subvalue">Final results</span>
+            </div>
+            <canvas id="Undergournd"></canvas>
+        </div>
+    </div>
+    
+    <div class="box">
+        <div class="tracker">
+            <div class="dates" >
+                <span style="width: 7rem; text-align:center; font-size: 0.9rem">Habits</span>
+                <div class="date" *ngFor="let date of displayedDates">
+                    <span>{{ date | date: 'dd'}}<br>{{ date | date: 'EEE'}}</span>
+                </div>
+            </div>
+            <div class="row" *ngFor="let habit of habits; let i = index" [ngClass]="i % 2 === 0 ? 'even' : 'odd'">
+                <span style="width: 7rem; text-align:center">{{ habit.habit }}</span>
+                <div *ngFor="let date of displayedDates" class="click" (click)="onClick($event)">
                     <i [ngClass]="          
                     getHabitProgress(habit.id, date) == 1 ? 'fad fa-check-square fa-lg green click' : 
                     getHabitProgress(habit.id, date) == 2 ? 'fad fa-minus-square fa-lg yellow click' : 
@@ -33,9 +77,39 @@
                     <span class="completed" id="{{ getHabitProgress(habit.id, date) }}"></span>
                     <span class="date" id="{{ date }}"></span>
                     <span class="habit" id="{{ habit.id }}"></span>
-                </td>
-            </tr>
-        </table>
-
+                </div>
+            </div>            
+        </div>
     </div>
+
+     <!-- <table class="habits" style="display: none">
+            <tr class="title">
+                <th  colspan="100%">Habits tracker</th>
+            </tr>
+        <tr class="columns">
+            <th>Habit</th>
+            <th *ngFor="let date of displayedDates">
+                {{ date | date: 'dd'}}
+                <br>
+                
+            </th>
+        </tr>
+        <tr *ngFor="let habit of habits; let i = index" [ngClass]="i % 2 === 0 ? 'even' : 'odd'">
+            <td>
+                {{ habit.habit }}</td>
+            <td *ngFor="let date of displayedDates" (click)="onClick($event)" class="click">
+                <i [ngClass]="          
+                getHabitProgress(habit.id, date) == 1 ? 'fad fa-check-square fa-lg green click' : 
+                getHabitProgress(habit.id, date) == 2 ? 'fad fa-minus-square fa-lg yellow click' : 
+                getHabitProgress(habit.id, date) == 3 ? 'fad fa-times-square fa-lg red click' : 'fal fa-square fa-lg gray click' ">
+                </i>
+                <span class="completed" id="{{ getHabitProgress(habit.id, date) }}"></span>
+                <span class="date" id="{{ date }}"></span>
+                <span class="habit" id="{{ habit.id }}"></span>
+            </td>
+        </tr>
+    </table> -->
+
+
 </div>
+

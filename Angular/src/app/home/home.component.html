@@ -5,16 +5,23 @@
     <span><a href="https://medium.com/@dougcorrea" target="_blank">Medium</a></span>
 </div>
 
-<div class="body">
-    <h1>Reach your full potential<br>performing with excellence.</h1>
-    <h3>A centralized personal development hub leveraging the power of smart algorithms and AI to  empower individuals to unlock their full potential and help them stay organized and achieve their goals effectively.</h3>
-
-    <button [routerLink]="['/tasks']">Check it out</button>
+<div class="container">
+    <div class="body">
+        <h1>Reach your full potential<br>performing with excellence</h1>
+        <h3>A centralized personal development hub leveraging the power of smart algorithms and AI to  empower individuals to unlock their full potential and help them stay organized and achieve their goals effectively.</h3>
+        <button [routerLink]="['/tasks']">Start demo tour</button>
+    </div>
+    <div class="animation">
+        <img src="../../assets/animation.svg">
+    </div>
 </div>
 
-<div class="display">
-    <i class="fas fa-chevron-left fa-2x"></i>
-    <img class="application" src="../../assets/app.png">
+
+
+<div class="display" style="display: none">
+    <i (click)="shew()" class="fas fa-chevron-left fa-2x"></i>
+    <img *ngIf="shaw" class="application" src="../../assets/app.png">
+    <img *ngIf="!shaw" class="application" src="../../assets/app2.png">
     <i class="fas fa-chevron-right fa-2x"></i>
 </div>
 
@@ -33,8 +40,8 @@
         <p>A spaced repetition system designed to supercharge your language learning with smart algorithims, maximizing retention and accelerating your progress.</p>
     </div>
     <div class="feature">
-        <span>Bookshelf & Audiobook Player</span>
-        <p>A reading planner system with recomendations based on user history and preferences, integrated with a complete audiobook player</p>
+        <span>Complete Virtual Bookshelf</span>
+        <p>A virtual Bookshelf system with recomendations for new readings based on user history and preferences, integrated with an efficient audiobook player</p>
     </div>
 </div>
 

@@ -1,6 +1,15 @@
 
 
-<div style="display: flex;">
+<div class="container">
+
+    <div class="left-card">
+        <div class="body"><span>Emperor</span></div>
+        <div class="bottom"><button>Start</button></div>
+    </div>
+    <div class="right-card">
+        <div class="body"><span>Emperor</span></div>
+        <div class="bottom"><button>Start</button></div>
+    </div>
 
     <!-- Start -->
     <div *ngIf="startStatus" class="card">
@@ -26,7 +35,7 @@
     <div *ngIf="cardStatus && !startStatus && !stopStatus"  class="card" #frontCard>
         <div class="head">
             <i (click)="speakText()" class="fas fa-play fa-lg"></i>
-            <i (click)="editCard()" class="fas fa-edit fa-lg"></i>
+            <i (click)="editCard(0)" class="fas fa-edit fa-lg"></i>
             <i class="fas fa-redo-alt fa-flip-horizontal fa-lg"></i>
         </div>
         <div class="body">
@@ -41,7 +50,7 @@
     <div *ngIf="!cardStatus && !startStatus && !stopStatus" class="card">
         <div class="head">
             <i (click)="speakText()" class="fas fa-play fa-lg"></i>
-            <i (click)="editCard()" class="fas fa-edit fa-lg"></i>
+            <i (click)="editCard(0)" class="fas fa-edit fa-lg"></i>
             <i class="fas fa-redo-alt fa-flip-horizontal fa-lg"></i>
         </div>
         <div class="body">
@@ -63,19 +72,4 @@
         </div>
     </div>
 
-</div>
-
-<!-- Right menu -->
-<div class="menu">
-    <div class="submenu selected" id="Home">
-        <i class="fal fa-home fa-lg"></i>   
-        <span>Home</span>
-    </div>
-    <hr>
-    <div *ngFor="let deck of decks">
-        <div class="submenu">
-            <i class="fal fa-graduation-cap fa-lg"></i>
-            <span>{{ deck.deck }} </span>
-        </div>
-    </div>
 </div>

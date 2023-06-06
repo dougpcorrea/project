@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
-import { DataService } from './system.service';
+import { BooksService } from './books/books.service';
+import { TasksService } from './tasks/tasks.service';
+import { HabitsService } from './habits/habits.service'
 
 interface SideNavToggle {
     screenWidth: number;
@@ -11,9 +13,13 @@ interface SideNavToggle {
   templateUrl: './system.component.html',
   styleUrls: ['./system.component.scss']
 })
-export class SystemComponent implements AfterViewInit{
+export class SystemComponent implements AfterViewInit, OnInit{
 
-    constructor() {}
+    constructor(
+        private TasksService: TasksService,
+        private BooksService: BooksService,
+        private HabitsService: HabitsService,
+    ) {}
 
     load = true;
     
@@ -21,6 +27,13 @@ export class SystemComponent implements AfterViewInit{
 
     isSideNavCollapsed = false;
     screenWidth = 0;
+
+    ngOnInit (){
+        this.HabitsService.getHabits().subscribe()
+        this.HabitsService.getProgress().subscribe()
+        this.TasksService.getTasks().subscribe()
+        this.BooksService.getData().subscribe()
+    }
 
     ngAfterViewInit(){
         this.load = true;

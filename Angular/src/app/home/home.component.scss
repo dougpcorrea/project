@@ -44,38 +44,53 @@
     }
 }
 
-.body {
+.container{
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
     align-items: center;
-    margin-top: 4.5rem;
-    margin-bottom: 5rem;
+    justify-content: center;
 
-    button {
-        margin-top: 0.5%;
-        font-size: 1.25rem;
-        padding: 0.5rem 1.25rem;
-    }
-
-    h1 {
-        text-align: center;
-        font-size: 2rem;
-        line-height: 2.5rem;
-        font-weight: 600;
-    }
-
-    h3 {
-        width: 50rem;
-        text-align: center;
-    }
-
-    @media (max-width: 1000px) {
-        h3, h1 {
-            width: 80%;
+    .body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 40rem;
+        margin-right: -3rem;
+    
+        button {
+            margin-top: 0.5%;
+            font-size: 1.25rem;
+            padding: 0.5rem 1.25rem;
+        }
+    
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            line-height: 2.5rem;
+            font-weight: 600;
+        }
+    
+        h3 {
+            font-size: 1.1rem;
+            text-align: center;
+            color: #494949;
+        }
+    
+        @media (max-width: 1000px) {
+            h3, h1 {
+                width: 80%;
+            }
         }
     }
+
+    .animation{
+        width: 40rem;
+        height: 100%;
+    }
 }
+
+
 
 .display {
     display: flex;
@@ -99,10 +114,6 @@
     }
 }
 
-hr{
-    top: -1px;
-}
-
 .gradient {
     top: 0;
     position: absolute;
@@ -117,7 +128,7 @@ hr{
     column-gap: 3rem;
     padding-top: 3rem;
     font-family: 'Roboto';
-    margin-bottom: 5rem;
+    margin-bottom: 3rem;
 
     .feature{
         width: 18%;
@@ -151,4 +162,20 @@ hr{
     justify-content: center;
     flex-direction: row;
     column-gap: 1%;
+}
+
+// Others
+
+button {
+    align-items: center;
+    padding: 1vh 0px;
+    border: none;
+    border-radius: 0.3rem;
+    font-size: 1.2rem !important;
+    color: var(--secondary-color);
+    background: var(--primary-color);
+    cursor: pointer;
+    font-family: 'Roboto';
+    overflow: hidden;
+    box-shadow: 0 .125rem .25rem #e6edef;
 }

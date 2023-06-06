@@ -1,6 +1,6 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatSelect } from '@angular/material/select';
-import { DataService } from './tasks.service';
+import { TasksService } from './tasks.service';
 import { FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ViewChildren, QueryList } from '@angular/core';
@@ -10,6 +10,8 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import * as moment from 'moment';
 import { parseTemplate } from '@angular/compiler';
 import { environment } from 'src/environments/environment';
+import { SidenavService } from '../menu/sidenav.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-tasks',
@@ -19,7 +21,12 @@ import { environment } from 'src/environments/environment';
 
 export class TasksComponent implements OnInit {
 
-    constructor(private dataService: DataService, @Inject(DOCUMENT) private document: Document) { }
+    clickEventsubscription!: Subscription;
+
+    constructor(private TasksService: TasksService, @Inject(DOCUMENT) private document: Document, private SidenavService: SidenavService) { 
+        this.clickEventsubscription = this.SidenavService.getClickEvent().subscribe((res)=>{
+            this.filterData(res)})
+    }
 
     @ViewChild('taskInput') taskInput!: ElementRef;
     @ViewChild('dateInput') dateInput!: ElementRef;
@@ -103,7 +110,7 @@ export class TasksComponent implements OnInit {
         if (environment.production) {
             this.title = 'Inbox'
         }
-        this.dataService.getTasks().subscribe((res: any[]) => {
+        this.TasksService.getTasks().subscribe((res: any[]) => {
             res.forEach((task: any) => {
                 if (task.date === null) {
                     task.date = 'No date selected';
@@ -114,7 +121,7 @@ export class TasksComponent implements OnInit {
             this.subtasks = res.filter((task: any) => task.subtask !== 0).sort((a: any, b: any) => a.ordering - b.ordering);
             this.show = true;
         });
-        this.dataService.getKarma().subscribe(res => {
+        this.TasksService.getKarma().subscribe(res => {
             let filteredData = res.filter((item: { date: string; }) => item.date === this.today);
             if (filteredData.length > 0) {
                 this.completedTasks = filteredData[0].completed;
@@ -179,13 +186,12 @@ export class TasksComponent implements OnInit {
     }
 
     filterData(id: string) {
-        console.log(this.tasks)
         this.title = id
-
-        this.isDisabled = false;
 
         this.document.querySelectorAll('.selected').forEach(element => { element.classList.remove('selected'); });
         this.document.querySelector(`#${id}`)?.classList.add('selected')
+
+        this.isDisabled = false;
 
             if (id === 'Today') {
                 this.filteredTasks = this.tasks.filter((task: any) =>
@@ -303,7 +309,7 @@ export class TasksComponent implements OnInit {
             const i_filter = this.filteredTasks.findIndex(function (x) { return x.id == id })
             this.filteredTasks[i_filter].date = dateString;
             this.tasks[i_all].date = dateString;
-            this.dataService.updateTaskDate(id, finalDate)
+            this.TasksService.updateTaskDate(id, finalDate)
         }
 
         const hoje = new Date()
@@ -312,7 +318,7 @@ export class TasksComponent implements OnInit {
         const diff = data.getDate() - hoje.getDate() 
 
 
-        if ((this.title === 'Today' && diff !== 0) || (this.title === 'This week' && (diff > 7 || diff < 0))){
+        if ((this.title === 'Today' && diff > 0) || (this.title === 'This week' && (diff > 7 || diff < 0))){
             const i_all = this.tasks.findIndex(function (x) { return x.id == id })
             const i_filter = this.filteredTasks.findIndex(function (x) { return x.id == id })
             this.tasks[i_all].status = 2;
@@ -331,7 +337,7 @@ export class TasksComponent implements OnInit {
 
         this.tasks[i].project = project;
         
-        this.dataService.updateProject(id, project)
+        this.TasksService.updateProject(id, project)
 
         if (this.tasks.some(obj => obj.project === this.title) && project !== this.project){
             this.filteredTasks[index].status = 2;
@@ -375,7 +381,7 @@ export class TasksComponent implements OnInit {
         if (this.task !== '') {
             this.tasks.push(obj)
             this.filteredTasks.push(obj)
-            this.dataService.addTask(id, this.task, date, this.priority, project, index, 0, 0, repeat)
+            this.TasksService.addTask(id, this.task, date, this.priority, project, index, 0, 0, repeat)
         }
 
         this.repeat = false;
@@ -412,7 +418,7 @@ export class TasksComponent implements OnInit {
         if (task !== '') {
             this.subtasks.push(obj)
             this.filteredSubtasks.push(obj)
-            this.dataService.addTask(id, task, null, null, null, index, 0, subtask, 0)
+            this.TasksService.addTask(id, task, null, null, null, index, 0, subtask, 0)
         }
     }
 
@@ -425,14 +431,14 @@ export class TasksComponent implements OnInit {
                 this.tasks[i].status = 2;
                 this.filteredTasks[j].status = 2;
                 setTimeout(() => { this.tasks.splice(i, 1), this.filteredTasks.splice(j, 1) }, 250);
-                this.dataService.deleteTask(element.target.id)
+                this.TasksService.deleteTask(element.target.id)
             } else {
                 const i = this.subtasks.findIndex(function (x) { return x.id == element.target.id })
                 const k = this.filteredSubtasks.findIndex(function (x) { return x.id == element.target.id })
                 this.subtasks.splice(i, 1)
                 this.filteredSubtasks[k].status = 2;
                 setTimeout(() => { this.filteredSubtasks.splice(k, 1) }, 250);
-                this.dataService.deleteTask(element.target.id)
+                this.TasksService.deleteTask(element.target.id)
             }
         }
     }
@@ -444,12 +450,12 @@ export class TasksComponent implements OnInit {
             const index = this.filteredTasks.findIndex(function (x) { return x.id == id })
                            
             this.completedTasks = this.completedTasks + 1
-            this.dataService.updateKarma(this.today, this.completedTasks)
+            this.TasksService.updateKarma(this.today, this.completedTasks)
 
             if (this.tasks[i].repeat === 1){
                 let hoje = new Date();
                 let competency = new Date(hoje.setDate(hoje.getDate() + 1)).toISOString().split('T')[0];
-                this.dataService.updateTaskDate(id, competency)
+                this.TasksService.updateTaskDate(id, competency)
                 
                 this.filteredTasks[index].status = 3;
                 this.tasks[i].date = competency
@@ -457,7 +463,7 @@ export class TasksComponent implements OnInit {
                 
             } else {
                 this.filteredTasks[index].status = 2;
-                this.dataService.updateTaskStatus(id, 1)
+                this.TasksService.updateTaskStatus(id, 1)
                 setTimeout(() => { this.filteredTasks.splice(index, 1), this.tasks[i].status = 1 }, 250);
             }
 
@@ -468,12 +474,12 @@ export class TasksComponent implements OnInit {
                 const index = this.filteredTasks.findIndex(function (x) { return x.id == id })
                 this.filteredTasks[index].status = 2;
                 setTimeout(() => { this.tasks[i].status = 2; }, 250);
-                this.dataService.updateTaskStatus(id, 0)
+                this.TasksService.updateTaskStatus(id, 0)
 
                 this.subtasks.filter((task: any) => task.subtask === id).forEach((data) => {
                     const i = this.subtasks.findIndex(function (x) { return x.id == data.id })
                     this.subtasks[i].status = 0;
-                    this.dataService.updateTaskStatus(data.id, 0)
+                    this.TasksService.updateTaskStatus(data.id, 0)
                 })
             }
         } else if (status === 1 && type === 2){
@@ -484,7 +490,7 @@ export class TasksComponent implements OnInit {
                 const subtasksIndex = this.subtasks.findIndex(function (x) { return x.id == id })
                 this.filteredSubtasks[filteredSubtasksIndex].status = 0;
                 this.subtasks[subtasksIndex].status = 0;
-                this.dataService.updateTaskStatus(id, 0)
+                this.TasksService.updateTaskStatus(id, 0)
             } else {
                 if (confirm('Are you sure?')) {
                     const filteredSubtasksIndex = this.filteredSubtasks.findIndex(function (x) { return x.id == id })
@@ -493,8 +499,8 @@ export class TasksComponent implements OnInit {
                     const index = this.filteredTasks.findIndex(function (x) { return x.id == parent_id})
                     this.filteredSubtasks[filteredSubtasksIndex].status = 0;
                     this.subtasks[subtasksIndex].status = 0;
-                    this.dataService.updateTaskStatus(id, 0)
-                    this.dataService.updateTaskStatus(parent_id, 0)
+                    this.TasksService.updateTaskStatus(id, 0)
+                    this.TasksService.updateTaskStatus(parent_id, 0)
                     this.filteredTasks[index].status = 2;
                     setTimeout(() => { this.filteredTasks.splice(index, 1), this.tasks[i].status = 0; }, 250);
                 }
@@ -504,7 +510,7 @@ export class TasksComponent implements OnInit {
             const subtasksIndex = this.subtasks.findIndex(function (x) { return x.id == id })
             this.filteredSubtasks[filteredSubtasksIndex].status = 1;
             this.subtasks[subtasksIndex].status = 1;
-            this.dataService.updateTaskStatus(id, 1)
+            this.TasksService.updateTaskStatus(id, 1)
 
             let total = this.subtasks.filter((task: any) => task.subtask === parent_id).length;
             let complete = this.subtasks.filter((task: any) => task.subtask === parent_id && task.status === 1).length;
@@ -514,10 +520,10 @@ export class TasksComponent implements OnInit {
                 const index = this.filteredTasks.findIndex(function (x) { return x.id == parent_id })
                 this.filteredTasks[index].status = 2;
                 setTimeout(() => { this.filteredTasks.splice(index, 1,), this.tasks[i].status = 1 }, 250);
-                this.dataService.updateTaskStatus(parent_id, 1)
+                this.TasksService.updateTaskStatus(parent_id, 1)
 
                 this.completedTasks = this.completedTasks + 1
-                this.dataService.updateKarma(this.today, this.completedTasks)
+                this.TasksService.updateKarma(this.today, this.completedTasks)
             }
         }
 
@@ -578,13 +584,13 @@ export class TasksComponent implements OnInit {
         const i_filter= this.filteredTasks.findIndex(function (x) { return x.id == id })
         this.tasks[i_all].priority = newPriority
         this.filteredTasks[i_filter].priority = newPriority
-        this.dataService.updateTaskPriority(id, newPriority)
+        this.TasksService.updateTaskPriority(id, newPriority)
     }
 
     makeTaskEditable(event: any, id: number, type: number) {
         event.preventDefault();
         let name = event.target.innerText
-        this.dataService.updateTaskName(id, name)
+        this.TasksService.updateTaskName(id, name)
     }
 
     onDrop(event: CdkDragDrop<any>, id: number, type: number) {
@@ -603,7 +609,7 @@ export class TasksComponent implements OnInit {
                 } else {
                     date = data.date
                 }
-                this.dataService.addTask(data.id, data.task, date, data.priority, data.project, ordering, data.status, data.subtask, data.repeat);
+                this.TasksService.addTask(data.id, data.task, date, data.priority, data.project, ordering, data.status, data.subtask, data.repeat);
             });
         } else {
             
@@ -615,7 +621,7 @@ export class TasksComponent implements OnInit {
                 } else {
                     date = data.date
                 }
-                this.dataService.addTask(data.id, data.task, date, data.priority, data.project, ordering, data.status, data.subtask, data.repeat);
+                this.TasksService.addTask(data.id, data.task, date, data.priority, data.project, ordering, data.status, data.subtask, data.repeat);
             });
 
             event.container.data.forEach((data: { id: any; }) => {
@@ -639,7 +645,7 @@ export class TasksComponent implements OnInit {
            newRepeat = 1
         }
 
-        this.dataService.updateRepeat(id, newRepeat)
+        this.TasksService.updateRepeat(id, newRepeat)
         let i = this.tasks.findIndex(function (x) { return x.id == id})
         let j = this.filteredTasks.findIndex(function (x) { return x.id == id})
         this.tasks[i].repeat = newRepeat
@@ -702,72 +708,35 @@ export class TasksComponent implements OnInit {
                         this.smartDate = match[1];
                         this.task = inputString.replace(match[1], '').trim().replace(/\s+/g, ' ');;
                     } 
-                } else if (part.toLowerCase() === 'today'){
-                    this.smartDate = 'today'
-                    this.task = inputString.replace(part, '').trim().replace(/\s+/g, ' ');
+                } else {
                     const date = new Date()
-                    this.smartDateFormated = date.toISOString().split('T')[0]
-                } else if (part.toLowerCase() === 'tomorrow'){
-                    this.smartDate = 'tomorrow'
-                    this.task = inputString.replace(part, '').trim().replace(/\s+/g, ' ');
-                    const date = new Date()
-                    this.smartDateFormated = new Date(date.setDate(date.getDate() + 1)).toISOString().split('T')[0]
-                } else if (part.toLowerCase() === 'next week'){
-                    this.smartDate = 'next week'
-                    this.task = inputString.replace(part, '').trim().replace(/\s+/g, ' ');
-                    const date = new Date()
-                    this.smartDateFormated = new Date(date.setDate(date.getDate() + 7)).toISOString().split('T')[0]
-                } else if (part.toLowerCase() === 'saturday'){
-                    this.smartDate = 'saturday'
-                    this.task = inputString.replace(part, '').trim().replace(/\s+/g, ' ');
-                    const today = new Date();
-                    const nextSaturday = new Date();
-                    this.smartDateFormated = new Date(nextSaturday.setDate(today.getDate() + (5 - today.getDay() + 1) % 7)).toISOString().split('T')[0];
-                    console.log(this.smartDateFormated)
-                } else if (part.toLowerCase() === 'sunday'){
-                    this.smartDate = 'sunday'
-                    this.task = inputString.replace(part, '').trim().replace(/\s+/g, ' ');
-                    const today = new Date();
-                    const nextSaturday = new Date();
-                    this.smartDateFormated = new Date(nextSaturday.setDate(today.getDate() + (6 - today.getDay() + 1) % 7)).toISOString().split('T')[0];
-                    console.log(this.smartDateFormated)
-                } else if (part.toLowerCase() === 'monday'){
-                    this.smartDate = 'monday'
-                    this.task = inputString.replace(part, '').trim().replace(/\s+/g, ' ');
-                    const today = new Date();
-                    const nextSaturday = new Date();
-                    this.smartDateFormated = new Date(nextSaturday.setDate(today.getDate() + (7 - today.getDay() + 1) % 7)).toISOString().split('T')[0];
-                    console.log(this.smartDateFormated)
-                } else if (part.toLowerCase() === 'tuesday'){
-                    this.smartDate = 'tuesday'
-                    this.task = inputString.replace(part, '').trim().replace(/\s+/g, ' ');
-                    const today = new Date();
-                    const nextSaturday = new Date();
-                    this.smartDateFormated = new Date(nextSaturday.setDate(today.getDate() + (8 - today.getDay() + 1) % 7)).toISOString().split('T')[0];
-                    console.log(this.smartDateFormated)
-                } else if (part.toLowerCase() === 'wednesday'){
-                    this.smartDate = 'wednesday'
-                    this.task = inputString.replace(part, '').trim().replace(/\s+/g, ' ');
-                    const today = new Date();
-                    const nextSaturday = new Date();
-                    this.smartDateFormated = new Date(nextSaturday.setDate(today.getDate() + (9 - today.getDay() + 1) % 7)).toISOString().split('T')[0];
-                    console.log(this.smartDateFormated)
-                } else if (part.toLowerCase() === 'thursday'){
-                    this.smartDate = 'thursday'
-                    this.task = inputString.replace(part, '').trim().replace(/\s+/g, ' ');
-                    const today = new Date();
-                    const nextSaturday = new Date();
-                    this.smartDateFormated = new Date(nextSaturday.setDate(today.getDate() + (10 - today.getDay() + 1) % 7)).toISOString().split('T')[0];
-                    console.log(this.smartDateFormated)
-                } else if (part.toLowerCase() === 'friday'){
-                    this.smartDate = 'friday'
-                    this.task = inputString.replace(part, '').trim().replace(/\s+/g, ' ');
-                    const today = new Date();
-                    const nextSaturday = new Date();
-                    this.smartDateFormated = new Date(nextSaturday.setDate(today.getDate() + (11 - today.getDay() + 1) % 7)).toISOString().split('T')[0];
-                    console.log(this.smartDateFormated)
-                }
-                
+                    switch (part.toLowerCase()){                        
+                        case 'today':
+                            this.smartDate = 'today'
+                            this.task = inputString.replace(part, '').trim().replace(/\s+/g, ' ');
+                            this.smartDateFormated = date.toISOString().split('T')[0]
+                            break;
+                        case 'tomorrow':
+                            this.smartDate = 'tomorrow'
+                            this.task = inputString.replace(part, '').trim().replace(/\s+/g, ' ');
+                            this.smartDateFormated = new Date(date.setDate(date.getDate() + 1)).toISOString().split('T')[0]
+                            break;
+                        case 'saturday':
+                        case 'sunday':
+                        case 'monday':
+                        case 'tuesday':
+                        case 'wednesday':
+                        case 'thursday':
+                        case 'friday':
+                            const today = new Date();
+                            const dayIndex = ['saturday', 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday'].indexOf(part.toLowerCase());
+                            this.smartDate = part.toLowerCase();
+                            this.task = inputString.replace(part, '').trim().replace(/\s+/g, ' ');
+                            const nextDay = new Date();
+                            this.smartDateFormated = new Date(nextDay.setDate(today.getDate() + (dayIndex + 5 - today.getDay() + 1) % 7)).toISOString().split('T')[0];
+                            break;
+                    }
+                }                
             }
         }
     
@@ -877,13 +846,5 @@ export class TasksComponent implements OnInit {
         {project: 'Grocery', karma: 0},
         {project: 'Buys', karma: 0},
     ]
-
-    // projects = [
-    //     {project: 'Inbox', karma: 1},
-    //     {project: 'College', karma: 0},
-    //     {project: 'Professional', karma: 1},
-    //     {project: 'Grocery', karma: 0},
-    //     {project: 'Buys', karma: 0},
-    // ]
 
 }

@@ -1,10 +1,34 @@
 <div class="sidenav">
     <ul class="sidenav-nav">
         <li class="sidenav-nav-item" *ngFor="let data of navData">
-            <a class="sidenav-nav-link" [routerLink]="[data.routeLink]" routerLinkActive="active"
+            <a class="sidenav-nav-link" (click)="change(data.routeLink)" [routerLink]="[data.routeLink]" routerLinkActive="active"
                 [routerLinkActiveOptions]="{exact: true}">
                 <i class="sidenav-link-icon" [class]="data.icon"></i>
             </a>
         </li>
     </ul>
+</div>
+
+<div class="menu">
+
+    <div class="search">
+        <div>
+            <input type="text" placeholder="Search">
+            <i class="fal fa-search fa-lg"></i>
+        </div>
+    </div>
+    <hr>
+    <div *ngFor="let item of submenu">
+        <div (click)="method(item.title)" class="submenu" id="{{ item.title }}">
+            <i class="{{ item.icon }}"></i>   
+            <span>{{ item.title }}</span>
+        </div>
+    </div>
+    <hr>
+    <div *ngFor="let item of secondSubmenu">
+        <div (click)="method(item.title)" class="submenu" id="{{ item.title }}">
+            <i class="{{ item.icon }}"></i>   
+            <span>{{ item.title }}</span>
+        </div>
+    </div>
 </div>

@@ -31,6 +31,8 @@ import { FlashComponent } from './system/flash/flash.component';
 import { EditCardComponent } from './system/flash/edit-card/edit-card.component';
 import { SystemComponent } from './system/system.component';
 import { HomeComponent } from './home/home.component';
+import { BooksComponent } from './system/books/books.component';
+import { HeadComponent } from './system/head/head.component';
 
 
 
@@ -48,6 +50,8 @@ import { HomeComponent } from './home/home.component';
     EditCardComponent,
     SystemComponent,
     HomeComponent,
+    BooksComponent,
+    HeadComponent,
   ],
   imports: [
     ApplicationModule,

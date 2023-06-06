@@ -13,31 +13,36 @@ import { environment } from 'src/environments/environment';
 export class EditCardComponent {
 
     constructor(private dialog: MatDialogRef<EditCardComponent>, private http: HttpClient, @Inject(MAT_DIALOG_DATA) public dialogData: any) {
-        console.log(dialogData)
-        this.question = dialogData[1].front;
-        this.id = dialogData[0].id
-        this.answerOne = dialogData[2].back_one
-        this.answerTwo = dialogData[3].back_two
-        this.answerThree = dialogData[4].back_three
 
-        if (dialogData[2].back_one?.startsWith('<img>')) {
-            this.answerOneType = 'image'
-            this.selectedAnswerType = 'image'
-            this.answerOne = dialogData[2].back_one.split('<img>')[1]
-        }
+        this.type = dialogData[5].type
 
-        if (dialogData[3].back_two?.startsWith('<img>')) {
-            this.answerTwoType = 'image'
-            this.answerTwo = dialogData[3].back_two.split('<img>')[1]
-        }
+        if (this.type === 0) {
+            this.question = dialogData[1].front;
+            this.id = dialogData[0].id
+            this.answerOne = dialogData[2].back_one
+            this.answerTwo = dialogData[3].back_two
+            this.answerThree = dialogData[4].back_three
 
-        if (dialogData[4].back_three?.startsWith('<img>')) {
-            this.answerThreeType = 'image'
-            this.answerThree = dialogData[4].back_three.split('<img>')[1]
+            if (dialogData[2].back_one?.startsWith('<img>')) {
+                this.answerOneType = 'image'
+                this.selectedAnswerType = 'image'
+                this.answerOne = dialogData[2].back_one.split('<img>')[1]
+            }
+    
+            if (dialogData[3].back_two?.startsWith('<img>')) {
+                this.answerTwoType = 'image'
+                this.answerTwo = dialogData[3].back_two.split('<img>')[1]
+            }
+    
+            if (dialogData[4].back_three?.startsWith('<img>')) {
+                this.answerThreeType = 'image'
+                this.answerThree = dialogData[4].back_three.split('<img>')[1]
+            }
         }
     }
 
     id!: number
+    type!: number
     error!: string
     question!: string
     answerOne!: any
@@ -89,6 +94,7 @@ export class EditCardComponent {
         const payload = {
             id: this.id,
             front: this.question,
+            type: this.type,
             back_one: back_one,
             url_one: url_one,
             filetype_one: filetype_one,
@@ -100,15 +106,28 @@ export class EditCardComponent {
             filetype_three: filetype_three,
         };
 
-        return this.http.put(`${environment.apiUrl}cards/`, payload).subscribe(res => {
-            if (res === 'URL_INVALIDO') {
-                this.erro = true;
-                this.error = 'The provided URL is invalid'
-                console.log(res)
-            } else {
-                this.dialog.close(res)
-            }
-        })
+        if (this.type === 0){
+            return this.http.put(`${environment.apiUrl}cards/`, payload).subscribe(res => {
+                if (res === 'URL_INVALIDO') {
+                    this.erro = true;
+                    this.error = 'The provided URL is invalid'
+                    console.log(res)
+                } else {
+                    this.dialog.close(res)
+                }
+            })
+        } else {
+            return this.http.post(`${environment.apiUrl}cards/`, payload).subscribe(res => {
+                if (res === 'URL_INVALIDO') {
+                    this.erro = true;
+                    this.error = 'The provided URL is invalid'
+                    console.log(res)
+                } else {
+                    this.dialog.close(res)
+                }
+            })
+        }
+
     }
 
     close() {

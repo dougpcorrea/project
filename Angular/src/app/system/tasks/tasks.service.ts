@@ -8,7 +8,7 @@ import { BehaviorSubject, tap } from 'rxjs';
   providedIn: 'root'
 })
 
-export class DataService {
+export class TasksService {
 
   constructor(private httpClient: HttpClient) { }
 
