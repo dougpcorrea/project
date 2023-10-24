@@ -84,7 +84,7 @@ if os.environ.get('DJANGO_ENV') == 'prod':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'project_31jh',
+            'NAME': 'project_31jh_vx3c',
             'USER': 'root',
             'PASSWORD': os.environ.get('DB_PASSWORD'),
             'HOST': os.environ.get('DB_HOST'),
